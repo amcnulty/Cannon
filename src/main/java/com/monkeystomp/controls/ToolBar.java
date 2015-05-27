@@ -7,6 +7,7 @@ package com.monkeystomp.controls;
 
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
+import java.util.Random;
 
 /**
  *

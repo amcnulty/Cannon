@@ -23,9 +23,12 @@ import javax.swing.JFrame;
 public class Display extends Canvas implements Runnable {
     // Varialbes for the JFrame and screen size.
     // Width and Height of the screen before being scaled up by scale.
-    public int width, height;
+    public int width = 416; 
+    public int height = width * 9 / 16;
     // The frame is scaled up by this factor.
     private static int scale = 3;
+    //The bottom edge of the toolbar
+    private static final int TOOLBAR_BOTTOM_EDGE = 50;
     // Object used to describe the size of the JFrame.
     Dimension size;
     // The window frame.
@@ -57,18 +60,16 @@ public class Display extends Canvas implements Runnable {
         size = Toolkit.getDefaultToolkit().getScreenSize();
 //        width = (int)(size.getWidth() * .3);
 //        height = (int)(size.getHeight() * .3);
-        width = 420;
-        height = (width * 9 / 16); 
         size.width = width * scale;
         size.height = height * scale;
         setPreferredSize(size);
         frame = new JFrame();
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-        screen = new Screen(width, height, (int) (.18 * height));
+        screen = new Screen(width, height, TOOLBAR_BOTTOM_EDGE);
         gameState = GAME_RUNNING;
-        level = Level.randomLevel;
-        toolbar = new ToolBar(width, height, (int) (.18 * height));
+        level = Level.grassLevel;
+        toolbar = new ToolBar(width, height, TOOLBAR_BOTTOM_EDGE);
     }
     
     public void start() {
@@ -139,8 +140,8 @@ public class Display extends Canvas implements Runnable {
                 createBufferStrategy(3);
                 return;
             }
-        toolbar.render(screen);
         level.render(screen);
+        toolbar.render(screen);
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);

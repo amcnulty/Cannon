@@ -15,13 +15,13 @@ public class Screen {
     
     private Random random;
     private int width, height;
-    private int toolbarBottomEdge;
+    private final int TOP_OF_VIEW;
     public int[] pixels;
     
-    public Screen(int width, int height, int toolbarBottomEdge) {
+    public Screen(int width, int height, int topOfViewArea) {
         this.width = width;
         this.height = height;
-        this.toolbarBottomEdge = toolbarBottomEdge;
+        this.TOP_OF_VIEW = topOfViewArea;
         pixels = new int[width * height];
         random = new Random();
     }
@@ -59,15 +59,15 @@ public class Screen {
     }
     
     public void renderLevel(int backgroundColor, int groundColor) {
-        for (int y = toolbarBottomEdge; y < (int)(height * 2 / 3); y++) {
+        for (int y = TOP_OF_VIEW; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 pixels[x + y * width] = backgroundColor;
             }
         }
-        for (int y = (int)(height * 2 / 3); y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                pixels[x + y * width] = groundColor;
-            }
-        }
+//        for (int y = (int)(height * 2 / 3); y < height; y++) {
+//            for (int x = 0; x < width; x++) {
+//                pixels[x + y * width] = groundColor;
+//            }
+//        }
     }
 }
