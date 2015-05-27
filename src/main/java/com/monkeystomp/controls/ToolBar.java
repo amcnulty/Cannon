@@ -17,7 +17,7 @@ public class ToolBar {
     // Dimensions of the screen.
     private int width, height;
     // Bottom edge of the toolbar on the screen.
-    private final int TOOLBAR_BOTTOM_EDGE;
+    public static int TOOLBAR_BOTTOM_EDGE;
     // True if toolbar is showing false if it is hidden.
     private boolean showing = true;
     // The background sprite
@@ -27,10 +27,10 @@ public class ToolBar {
     // Color of the background.
     private static final int BACKGROUNDCOLOR = 0x9393FF;
     
-    public ToolBar(int width, int height) {
+    public ToolBar(int width, int height, int toolbarBottomEdge) {
         this.width = width;
         this.height = height;
-        TOOLBAR_BOTTOM_EDGE = (int) (.18 * height);
+        TOOLBAR_BOTTOM_EDGE = toolbarBottomEdge;
         background = new Sprite(0, 0, buildBackground(), width, TOOLBAR_BOTTOM_EDGE);
     }
     

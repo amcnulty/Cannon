@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import com.monkeystomp.level.Level;
 import javax.swing.JFrame;
 
 /**
@@ -22,7 +23,7 @@ import javax.swing.JFrame;
 public class Display extends Canvas implements Runnable {
     // Varialbes for the JFrame and screen size.
     // Width and Height of the screen before being scaled up by scale.
-    private int width, height;
+    public int width, height;
     // The frame is scaled up by this factor.
     private static int scale = 3;
     // Object used to describe the size of the JFrame.
@@ -50,20 +51,24 @@ public class Display extends Canvas implements Runnable {
     private int gameState;
     // Game element variables.
     ToolBar toolbar;
+    Level level;
     
     public Display () {
         size = Toolkit.getDefaultToolkit().getScreenSize();
-        width = (int)(size.getWidth() * .3);
-        height = (int)(size.getHeight() * .3);
+//        width = (int)(size.getWidth() * .3);
+//        height = (int)(size.getHeight() * .3);
+        width = 420;
+        height = (width * 9 / 16); 
         size.width = width * scale;
         size.height = height * scale;
         setPreferredSize(size);
         frame = new JFrame();
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-        screen = new Screen(width, height);
+        screen = new Screen(width, height, (int) (.18 * height));
         gameState = GAME_RUNNING;
-        toolbar = new ToolBar(width, height);
+        level = Level.randomLevel;
+        toolbar = new ToolBar(width, height, (int) (.18 * height));
     }
     
     public void start() {
@@ -135,10 +140,8 @@ public class Display extends Canvas implements Runnable {
                 return;
             }
         toolbar.render(screen);
-            
-        for (int i = 0; i < pixels.length; i++) {
-                pixels[i] = screen.pixels[i];
-            }
+        level.render(screen);
+        System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         g.dispose();
