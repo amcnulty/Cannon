@@ -53,8 +53,8 @@ public class Display extends Canvas implements Runnable {
     // The variable that is checked by the render and update methods.
     private int gameState;
     // Game element variables.
-    ToolBar toolbar;
-    Level level;
+    private ToolBar toolbar;
+    public Level level;
     
     public Display () {
         size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -69,7 +69,7 @@ public class Display extends Canvas implements Runnable {
         screen = new Screen(width, height, TOOLBAR_BOTTOM_EDGE);
         gameState = GAME_RUNNING;
         level = Level.grassLevel;
-        toolbar = new ToolBar(width, height, TOOLBAR_BOTTOM_EDGE);
+        toolbar = new ToolBar(width, height, TOOLBAR_BOTTOM_EDGE, this);
     }
     
     public void start() {
@@ -90,7 +90,7 @@ public class Display extends Canvas implements Runnable {
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void run() {
         long lastTime = System.nanoTime();
@@ -125,8 +125,8 @@ public class Display extends Canvas implements Runnable {
     private void update() {
         switch (gameState) {
             case GAME_RUNNING:
-                toolbar.update();
-                
+                //toolbar.update();
+                level.update();
                 break;
             case GAME_PAUSED:
                 

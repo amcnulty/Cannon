@@ -7,7 +7,6 @@ package com.monkeystomp.level;
 
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
-import java.awt.image.DataBufferInt;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -15,12 +14,13 @@ import javax.imageio.ImageIO;
  *
  * @author Aaron
  */
-public class GrassLevel extends Level {
-    
-    public GrassLevel(String path) {
+class PurpleLevel extends Level {
+
+    public PurpleLevel(String path) {
         super(path);
     }
     
+    @Override
     protected void loadLevel(String path) {
         try {
             levelBackgroundImage = ImageIO.read(Level.class.getResource(path));
@@ -31,13 +31,10 @@ public class GrassLevel extends Level {
         }
     }
     
+    @Override
     protected void generateLevel() {
         int[] pixels = new int[levelBackgroundImage.getWidth() * levelBackgroundImage.getHeight()];
         levelBackgroundImage.getRGB(0, 0, levelBackgroundImage.getWidth(), levelBackgroundImage.getHeight(), pixels, 0, levelBackgroundImage.getWidth());
-        // randomise the grass pixels
-        for (int i = 0; i < pixels.length; i++) {
-            if (pixels[i] == 0xff446E0F) pixels[i] += Math.abs(random.nextInt(0x00000040));
-        }
         levelBackgroundSprite = new Sprite(0, 50, pixels, levelBackgroundImage.getWidth(), levelBackgroundImage.getHeight());
     }
     
@@ -46,7 +43,7 @@ public class GrassLevel extends Level {
     }
     
     public void render(Screen screen) {
-        screen.renderSprite(0, 50, levelBackgroundSprite, false);
+        screen.renderSprite(levelBackgroundSprite.getRawX(), levelBackgroundSprite.getRawY(), levelBackgroundSprite, false);
         screen.renderSprite(30, 120, Sprite.basic_cannon, false);
     }
     

@@ -5,9 +5,10 @@
  */
 package com.monkeystomp.controls;
 
+import com.monkeystomp.graphics.Display;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
-import java.util.Random;
+import com.monkeystomp.level.Level;
 
 /**
  *
@@ -19,6 +20,8 @@ public class ToolBar {
     private int width, height;
     // Bottom edge of the toolbar on the screen.
     public static int TOOLBAR_BOTTOM_EDGE;
+    // Handle for the Display class.
+    Display display;
     // True if toolbar is showing false if it is hidden.
     private boolean showing = true;
     // The background sprite
@@ -28,10 +31,11 @@ public class ToolBar {
     // Color of the background.
     private static final int BACKGROUNDCOLOR = 0x9393FF;
     
-    public ToolBar(int width, int height, int toolbarBottomEdge) {
+    public ToolBar(int width, int height, int toolbarBottomEdge, Display display) {
         this.width = width;
         this.height = height;
         TOOLBAR_BOTTOM_EDGE = toolbarBottomEdge;
+        this.display = display;
         background = new Sprite(0, 0, buildBackground(), width, TOOLBAR_BOTTOM_EDGE);
     }
     
@@ -47,7 +51,15 @@ public class ToolBar {
         return result;
     }
     
+    int anim = 0;
     public void update() {
+        if (anim == 6000) anim = 0;
+        else anim++;
+        if (anim % 120 == 0) {
+            if (display.level.equals(Level.grassLevel)) display.level = Level.purpleLevel;
+            else if (display.level.equals(Level.purpleLevel)) display.level = Level.randomLevel;
+            else if (display.level.equals(Level.randomLevel)) display.level = Level.grassLevel;
+        }
     }
     
     public void render(Screen screen) {

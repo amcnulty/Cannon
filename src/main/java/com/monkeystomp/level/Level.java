@@ -21,6 +21,7 @@ public class Level {
     
     public static Level randomLevel = new RandomLevel();
     public static Level grassLevel = new GrassLevel("/levels/grass_level.png");
+    public static Level purpleLevel = new PurpleLevel("/levels/purple_ground_level.png");
     
     protected int width, height;
     protected int difficulty;
@@ -43,6 +44,9 @@ public class Level {
     }
     
     protected void generateLevel() {
+    }
+    
+    public void update() {
     }
     
     public void render(Screen screen) {

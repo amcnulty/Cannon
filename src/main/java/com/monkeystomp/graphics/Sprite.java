@@ -5,6 +5,10 @@
  */
 package com.monkeystomp.graphics;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 /**
  *
  * @author Aaron
@@ -14,6 +18,20 @@ public class Sprite {
     private int width, height;
     private int rawX, rawY;
     public int[] pixels;
+    
+    public static Sprite basic_cannon = new Sprite("/textures/cannons/basic_cannon.png");
+    
+    public Sprite(String path) {
+        try {
+            BufferedImage image = ImageIO.read(Sprite.class.getResource(path));
+            width = image.getWidth();
+            height = image.getHeight();
+            pixels = new int[width * height];
+            image.getRGB(0, 0, width, height, pixels, 0, width);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     public Sprite(int rawX, int rawY, int[] pixels, int width, int height) {
         this.rawX = rawX;
