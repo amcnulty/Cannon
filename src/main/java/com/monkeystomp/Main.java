@@ -10,6 +10,8 @@ import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 /**
@@ -18,10 +20,30 @@ import javax.swing.JFrame;
  */
 public class Main{
     public static void main(String[] args) {
-        BufferedImage cursor = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
-        for (int y = 0; y < 16; y++) {
-            for (int x = 0; x < 16; x++) {
-                cursor.setRGB(x, y, 0xff00ff);
+        BufferedImage cursorImage = null;
+        BufferedImage cursor = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        try {
+            cursorImage = ImageIO.read(Main.class.getResource("/textures/pointers/flame_sword_pointer.png"));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load mouse pointer image");
+        }
+        if (cursorImage != null) {
+            for (int y = 0; y < cursor.getWidth(); y++) {
+                for (int x = 0; x < cursor.getHeight(); x++) {
+                    if (cursorImage.getRGB(x, y) != 0xffff00ff) {
+                        cursor.setRGB(x, y, cursorImage.getRGB(x, y));
+                        System.out.println("PINK");
+                    }
+                }
+            }
+        }
+        else if (cursorImage == null) {
+            for (int y = 0; y < 16; y++) {
+                for (int x = 0; x < 16; x++) {
+                    cursorImage.setRGB(x, y, 0xff00ff);
+                }
             }
         }
         Cursor blank = Toolkit.getDefaultToolkit().createCustomCursor(cursor, new Point(0, 0), "blank");
