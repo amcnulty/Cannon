@@ -36,7 +36,10 @@ public class GrassLevel extends Level {
         levelBackgroundImage.getRGB(0, 0, levelBackgroundImage.getWidth(), levelBackgroundImage.getHeight(), pixels, 0, levelBackgroundImage.getWidth());
         // randomise the grass pixels
         for (int i = 0; i < pixels.length; i++) {
-            if (pixels[i] == 0xff446E0F) pixels[i] += Math.abs(random.nextInt(0x00000040));
+            if (pixels[i] == 0xff446E0F) pixels[i] += (0x000100 * Math.abs(random.nextInt(40)));
+        }
+        for (int i = 0; i < pixels.length; i++) {
+            if (pixels[i] == 0xff3F372A) pixels[i] += (0x000100 * random.nextInt(10)) + (0x010000 * random.nextInt(20));
         }
         levelBackgroundSprite = new Sprite(0, 50, pixels, levelBackgroundImage.getWidth(), levelBackgroundImage.getHeight());
     }
