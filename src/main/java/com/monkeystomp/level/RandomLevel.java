@@ -25,10 +25,6 @@ class RandomLevel extends Level {
     protected void generateLevel() {
         backgroundColor = random.nextInt();
         groundColor = random.nextInt();
-        System.out.println("Background Color: ");
-        System.out.print(Integer.toHexString(backgroundColor));
-        System.out.print(" Ground Color: " + groundColor);
-        
     }
     
     public void render(Screen screen) {

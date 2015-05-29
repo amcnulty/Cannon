@@ -34,7 +34,6 @@ public class Main{
                 for (int x = 0; x < cursor.getHeight(); x++) {
                     if (cursorImage.getRGB(x, y) != 0xffff00ff) {
                         cursor.setRGB(x, y, cursorImage.getRGB(x, y));
-                        System.out.println("PINK");
                     }
                 }
             }

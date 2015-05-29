@@ -53,12 +53,11 @@ public class ToolBar {
     
     int anim = 0;
     public void update() {
-        if (anim == 6000) anim = 0;
+        if (anim == 20000) anim = 0;
         else anim++;
-        if (anim % 120 == 0) {
-            if (display.level.equals(Level.grassLevel)) display.level = Level.purpleLevel;
-            else if (display.level.equals(Level.purpleLevel)) display.level = Level.randomLevel;
-            else if (display.level.equals(Level.randomLevel)) display.level = Level.grassLevel;
+        if (anim % 14400 == 0) {
+            if (display.level.equals(Level.grassLevel)) display.changeLevel(Level.purpleLevel);
+            else if (display.level.equals(Level.purpleLevel)) display.changeLevel(Level.grassLevel);
         }
     }
     

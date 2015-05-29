@@ -10,6 +10,9 @@ import com.monkeystomp.graphics.Sprite;
 import java.awt.image.DataBufferInt;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 /**
  *
@@ -29,6 +32,14 @@ public class GrassLevel extends Level {
             e.printStackTrace();
             System.err.println("Level could not load background image!");
         }
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(Level.class.getResource("/audio/songs/Schubert_Military_March.wav"));
+            backgroundMusic = AudioSystem.getClip();
+            backgroundMusic.open(ais);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     protected void generateLevel() {
@@ -42,6 +53,7 @@ public class GrassLevel extends Level {
             if (pixels[i] == 0xff3F372A) pixels[i] += (0x000100 * random.nextInt(10)) + (0x010000 * random.nextInt(20));
         }
         levelBackgroundSprite = new Sprite(0, 50, pixels, levelBackgroundImage.getWidth(), levelBackgroundImage.getHeight());
+        //backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
     }
     
     public void update() {

@@ -9,6 +9,7 @@ import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+import javax.sound.sampled.Clip;
 
 
 /**
@@ -29,6 +30,8 @@ public class Level {
     protected BufferedImage levelBackgroundImage;
     protected Sprite levelBackgroundSprite;
     
+    protected Clip backgroundMusic;
+    
     public Level() {
         random = new Random();
         generateLevel();
@@ -44,6 +47,15 @@ public class Level {
     }
     
     protected void generateLevel() {
+    }
+    
+    public void stopMusic() {
+        backgroundMusic.stop();
+    }
+    
+    public void playMusic() {
+        backgroundMusic.setFramePosition(0);
+        backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
     }
     
     public void update() {

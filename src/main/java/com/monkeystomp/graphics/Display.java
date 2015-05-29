@@ -26,7 +26,7 @@ public class Display extends Canvas implements Runnable {
     public int width = 416; 
     public int height = width * 9 / 16;
     // The frame is scaled up by this factor.
-    private static int scale = 4;
+    private static int scale = 3;
     //The bottom edge of the toolbar
     private static final int TOOLBAR_BOTTOM_EDGE = 50;
     // Object used to describe the size of the JFrame.
@@ -70,6 +70,13 @@ public class Display extends Canvas implements Runnable {
         gameState = GAME_RUNNING;
         level = Level.grassLevel;
         toolbar = new ToolBar(width, height, TOOLBAR_BOTTOM_EDGE, this);
+        changeLevel(Level.grassLevel);
+    }
+    
+    public void changeLevel(Level level) {
+        this.level.stopMusic();
+        this.level = level;
+        this.level.playMusic();
     }
     
     public void start() {
@@ -125,7 +132,7 @@ public class Display extends Canvas implements Runnable {
     private void update() {
         switch (gameState) {
             case GAME_RUNNING:
-                //toolbar.update();
+                toolbar.update();
                 level.update();
                 break;
             case GAME_PAUSED:
