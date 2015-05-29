@@ -23,7 +23,7 @@ public class Main{
         BufferedImage cursorImage = null;
         BufferedImage cursor = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
         try {
-            cursorImage = ImageIO.read(Main.class.getResource("/textures/pointers/beer_bottle_pointer.png"));
+            cursorImage = ImageIO.read(Main.class.getResource("/textures/pointers/torch_pointer.png"));
         }
         catch (IOException e) {
             e.printStackTrace();
