@@ -19,7 +19,6 @@ class RandomLevel extends Level {
 
     public RandomLevel() {
         super();
-        difficulty = EASY_DIFFICULTY;
     }
     
     protected void generateLevel() {

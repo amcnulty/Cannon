@@ -20,6 +20,10 @@ public class Sprite {
     public int[] pixels;
     
     public static Sprite basic_cannon = new Sprite("/textures/cannons/basic_cannon.png");
+    public static Sprite basic_cannonball = new Sprite("/textures/projectiles/basic_cannonball.png");
+    public static Sprite windup_cannonball = new Sprite("/textures/projectiles/windup_cannonball.png");
+    public static Sprite master_cannonball = new Sprite("/textures/projectiles/masterball_cannonball.png");
+    public static Sprite basic_ground_click = new Sprite(16, 16, 0xff0000);
     
     public Sprite(String path) {
         try {
@@ -41,6 +45,15 @@ public class Sprite {
         this.pixels = new int[pixels.length];
         for (int i = 0; i < pixels.length; i++) {
             this.pixels[i] = pixels[i];
+        }
+    }
+    
+    public Sprite(int width, int height, int color) {
+        this.width = width;
+        this.height = height;
+        pixels = new int[width * height];
+        for (int i = 0; i < pixels.length; i++) {
+            pixels[i] = color;
         }
     }
     

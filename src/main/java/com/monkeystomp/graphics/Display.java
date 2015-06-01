@@ -5,6 +5,8 @@
  */
 package com.monkeystomp.graphics;
 
+import com.monkeystomp.controls.Keyboard;
+import com.monkeystomp.controls.Mouse;
 import com.monkeystomp.controls.ToolBar;
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -22,11 +24,11 @@ import javax.swing.JFrame;
  */
 public class Display extends Canvas implements Runnable {
     // Varialbes for the JFrame and screen size.
-    // Width and Height of the screen before being scaled up by scale.
+    // Width and Height of the screen before being scaled up by SCALE.
     public int width = 416; 
     public int height = width * 9 / 16;
     // The frame is scaled up by this factor.
-    private static int scale = 3;
+    public static final int SCALE = 4;
     //The bottom edge of the toolbar
     private static final int TOOLBAR_BOTTOM_EDGE = 50;
     // Object used to describe the size of the JFrame.
@@ -53,23 +55,32 @@ public class Display extends Canvas implements Runnable {
     // The variable that is checked by the render and update methods.
     private int gameState;
     // Game element variables.
+    // The ToolBar class is incharge of the toolbar at the top of the screen.
     private ToolBar toolbar;
+    // The Level class is used to control the level this class is updating and rendering.
     public Level level;
+    // Allows access to mouse and keyboard input.
+    private Keyboard key;
+    private Mouse mouse;
     
     public Display () {
         size = Toolkit.getDefaultToolkit().getScreenSize();
-//        width = (int)(size.getWidth() * .3);
-//        height = (int)(size.getHeight() * .3);
-        size.width = width * scale;
-        size.height = height * scale;
+        size.width = width * SCALE;
+        size.height = height * SCALE;
         setPreferredSize(size);
         frame = new JFrame();
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
         screen = new Screen(width, height, TOOLBAR_BOTTOM_EDGE);
-        gameState = GAME_RUNNING;
         level = Level.grassLevel;
-        toolbar = new ToolBar(width, height, TOOLBAR_BOTTOM_EDGE, this);
+        key = new Keyboard();
+        mouse = new Mouse();
+        toolbar = new ToolBar(width, height, SCALE, TOOLBAR_BOTTOM_EDGE, this);
+        gameState = GAME_RUNNING;
+        
+        addKeyListener(key);
+        addMouseListener(mouse);
+        addMouseMotionListener(mouse);
         changeLevel(Level.grassLevel);
     }
     
@@ -132,8 +143,8 @@ public class Display extends Canvas implements Runnable {
     private void update() {
         switch (gameState) {
             case GAME_RUNNING:
-                toolbar.update();
                 level.update();
+                toolbar.update();
                 break;
             case GAME_PAUSED:
                 

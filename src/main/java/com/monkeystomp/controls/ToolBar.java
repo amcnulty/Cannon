@@ -18,10 +18,12 @@ public class ToolBar {
     
     // Dimensions of the screen.
     private int width, height;
+    // The scale factor of the window.
+    private int scale;
     // Bottom edge of the toolbar on the screen.
     public static int TOOLBAR_BOTTOM_EDGE;
     // Handle for the Display class.
-    Display display;
+    private Display display;
     // True if toolbar is showing false if it is hidden.
     private boolean showing = true;
     // The background sprite
@@ -31,9 +33,10 @@ public class ToolBar {
     // Color of the background.
     private static final int BACKGROUNDCOLOR = 0x9393FF;
     
-    public ToolBar(int width, int height, int toolbarBottomEdge, Display display) {
+    public ToolBar(int width, int height, int scale, int toolbarBottomEdge, Display display) {
         this.width = width;
         this.height = height;
+        this.scale = scale;
         TOOLBAR_BOTTOM_EDGE = toolbarBottomEdge;
         this.display = display;
         background = new Sprite(0, 0, buildBackground(), width, TOOLBAR_BOTTOM_EDGE);
@@ -51,18 +54,14 @@ public class ToolBar {
         return result;
     }
     
-    int anim = 0;
+    //int anim = 0;
     public void update() {
-        if (anim == 20000) anim = 0;
-        else anim++;
-        if (anim % 14400 == 0) {
-            if (display.level.equals(Level.grassLevel)) display.changeLevel(Level.purpleLevel);
-            else if (display.level.equals(Level.purpleLevel)) display.changeLevel(Level.grassLevel);
-        }
+        //if (Mouse.getMouseB() != -1) System.out.println(Mouse.getMouseB());
+        //System.out.println("X: " + (Mouse.getMouseX() / scale) + " Y: " + (Mouse.getMouseY() / scale));
     }
     
     public void render(Screen screen) {
-        screen.renderSprite(0, 0, background, false);
+        screen.renderSprite(0, 0, background);
     }
     
 }

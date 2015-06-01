@@ -5,6 +5,8 @@
  */
 package com.monkeystomp.level;
 
+import com.monkeystomp.controls.Mouse;
+import com.monkeystomp.graphics.Display;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
 import java.awt.image.BufferedImage;
@@ -18,12 +20,10 @@ import javax.sound.sampled.Clip;
  */
 public class Level {
     
-    public static final int EASY_DIFFICULTY = 1;
-    
-    public static Level randomLevel = new RandomLevel();
-    public static Level grassLevel = new GrassLevel("/levels/grass_level.png");
-    public static Level purpleLevel = new PurpleLevel("/levels/purple_ground_level.png");
-    
+    // Mouse possition adjusted for SCALE.
+    protected int mouseX, mouseY;
+    // Tells the render method to show buton click animation
+    protected boolean renderClicks = false;
     protected int width, height;
     protected int difficulty;
     protected Random random;
@@ -31,6 +31,11 @@ public class Level {
     protected Sprite levelBackgroundSprite;
     
     protected Clip backgroundMusic;
+    
+    public static Level randomLevel = new RandomLevel();
+    public static Level grassLevel = new GrassLevel("/levels/grass_level.png");
+    public static Level purpleLevel = new PurpleLevel("/levels/purple_ground_level.png");
+    
     
     public Level() {
         random = new Random();

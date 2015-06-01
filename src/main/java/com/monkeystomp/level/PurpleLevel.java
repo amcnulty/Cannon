@@ -5,9 +5,14 @@
  */
 package com.monkeystomp.level;
 
+import com.monkeystomp.controls.Mouse;
+import com.monkeystomp.entity.mob.projectiles.BasicCannonball;
+import com.monkeystomp.entity.mob.projectiles.Projectile;
+import com.monkeystomp.graphics.Display;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -18,6 +23,8 @@ import javax.sound.sampled.Clip;
  * @author Aaron
  */
 class PurpleLevel extends Level {
+    
+    private ArrayList<Projectile> projectiles = new ArrayList<>();
 
     public PurpleLevel(String path) {
         super(path);
@@ -50,13 +57,51 @@ class PurpleLevel extends Level {
         //backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
     }
     
+    public int getMouseX() {
+        return mouseX;
+    }
+    
+    public int getMouseY() {
+        return mouseY;
+    }
+    
+    /**
+     * Adjusts the mouse position to the current SCALE.
+     */
+    private void setMousePossition() {
+        mouseX = Mouse.getMouseX() / Display.SCALE;
+        mouseY = Mouse.getMouseY() / Display.SCALE;
+    }
+    
+    private boolean feildIsRightClicked() {
+        return Mouse.getMouseB() == 3 && mouseX > 100 && mouseY > 164;
+    }
+    
+    private int anim = 0;
+    @Override
     public void update() {
-        
+        if (anim > 10000) anim = 0;
+        else anim++;
+        setMousePossition();
+        if (feildIsRightClicked()) {
+            renderClicks = true;
+            //if (projectiles.isEmpty()) projectiles.add(Projectile.basicCannonball);
+            if (anim % BasicCannonball.FIRE_RATE == 0) projectiles.add(new BasicCannonball(62, 120));
+        }
+        else renderClicks = false;
+        for (int i = 0; i < projectiles.size(); i++) {
+            if (projectiles.get(i).isRemoved()) projectiles.remove(i);
+            else projectiles.get(i).update();
+        }
     }
     
     public void render(Screen screen) {
-        screen.renderSprite(levelBackgroundSprite.getRawX(), levelBackgroundSprite.getRawY(), levelBackgroundSprite, false);
-        screen.renderSprite(30, 120, Sprite.basic_cannon, false);
+        screen.renderSprite(0, 50, levelBackgroundSprite);
+        screen.renderSprite(30, 120, Sprite.basic_cannon);
+        if (renderClicks) screen.renderSprite(mouseX - (Sprite.basic_ground_click.getWidth() / 2), mouseY - (Sprite.basic_ground_click.getHeight() / 2), Sprite.basic_ground_click);
+        for (Projectile pro: projectiles) {
+            pro.render(screen);
+        }
     }
     
 }

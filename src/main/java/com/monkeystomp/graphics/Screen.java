@@ -41,7 +41,7 @@ public class Screen {
         }
     }
     
-    public void renderSprite(int xp, int yp, Sprite sprite, boolean fixed) {
+    public void renderSprite(int xp, int yp, Sprite sprite) {
 //        if (fixed) {
 //            xp -= xOffset;
 //            yp -= yOffset;
