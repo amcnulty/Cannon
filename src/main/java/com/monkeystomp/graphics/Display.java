@@ -5,6 +5,7 @@
  */
 package com.monkeystomp.graphics;
 
+import com.monkeystomp.entity.cannon.Cannon;
 import com.monkeystomp.controls.Keyboard;
 import com.monkeystomp.controls.Mouse;
 import com.monkeystomp.controls.ToolBar;
@@ -28,7 +29,7 @@ public class Display extends Canvas implements Runnable {
     public int width = 416; 
     public int height = width * 9 / 16;
     // The frame is scaled up by this factor.
-    public static final int SCALE = 4;
+    public static final int SCALE = 3;
     //The bottom edge of the toolbar
     private static final int TOOLBAR_BOTTOM_EDGE = 50;
     // Object used to describe the size of the JFrame.
@@ -59,6 +60,8 @@ public class Display extends Canvas implements Runnable {
     private ToolBar toolbar;
     // The Level class is used to control the level this class is updating and rendering.
     public Level level;
+    // Used to update and render a specific cannon
+    public Cannon cannon;
     // Allows access to mouse and keyboard input.
     private Keyboard key;
     private Mouse mouse;
@@ -76,12 +79,19 @@ public class Display extends Canvas implements Runnable {
         key = new Keyboard();
         mouse = new Mouse();
         toolbar = new ToolBar(width, height, SCALE, TOOLBAR_BOTTOM_EDGE, this);
+        changeLevel(Level.grassLevel);
+        initCannon(Cannon.basicCannon);
         gameState = GAME_RUNNING;
         
         addKeyListener(key);
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
-        changeLevel(Level.grassLevel);
+    }
+    
+    public void initCannon(Cannon cannon) {
+        this.cannon = cannon;
+        level.init(cannon);
+        cannon.init(level);
     }
     
     public void changeLevel(Level level) {
@@ -145,6 +155,7 @@ public class Display extends Canvas implements Runnable {
             case GAME_RUNNING:
                 level.update();
                 toolbar.update();
+                cannon.update();
                 break;
             case GAME_PAUSED:
                 
@@ -159,6 +170,7 @@ public class Display extends Canvas implements Runnable {
                 return;
             }
         level.render(screen);
+        cannon.render(screen);
         toolbar.render(screen);
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
         Graphics g = bs.getDrawGraphics();

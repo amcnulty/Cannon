@@ -46,6 +46,7 @@ public class GrassLevel extends Level {
         }
         catch (Exception e) {
             e.printStackTrace();
+            System.err.println("Level could not load background music!");
         }
     }
     
@@ -63,15 +64,7 @@ public class GrassLevel extends Level {
         levelBackgroundSprite = new Sprite(0, 50, pixels, levelBackgroundImage.getWidth(), levelBackgroundImage.getHeight());
         //backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
     }
-    
-    public int getMouseX() {
-        return mouseX;
-    }
-    
-    public int getMouseY() {
-        return mouseY;
-    }
-    
+
     /**
      * Adjusts the mouse position to the current SCALE.
      */
@@ -80,32 +73,38 @@ public class GrassLevel extends Level {
         mouseY = Mouse.getMouseY() / Display.SCALE;
     }
     
+    @Override
+    public void addProjectile(int x, int y) {
+        projectiles.add(Projectile.getProjectile(cannon.loadedProjectile));
+        projectiles.get(projectiles.size() - 1).setPosition(x, y);
+        projectiles.get(projectiles.size() - 1).setTrajectory(getForce(), cannon.angle);
+    }
+    
+    private double getForce() {
+        double force;
+        double x = mouseX - cannon.barrelX;
+        double y = mouseY - cannon.barrelY;
+        double top = 16 * Math.pow(x, 2);
+        double bottom = Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2) * (y + (x * Math.tan(Math.toRadians(cannon.angle))));
+        force = Math.sqrt(top / bottom);
+        //force = Math.sqrt( (16 * Math.pow((mouseX - cannon.barrelX), 2.0)) / (Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2.0) * ((mouseY + cannon.barrelY) + ((mouseX - cannon.barrelX) * Math.tan(Math.toDegrees(cannon.angle))))) );
+        System.out.println("mouseX: " + mouseX + " mouseY: " + mouseY + " Force: " + force);
+        System.out.println("Top: " + top + " Bottom: " + bottom);
+        return force;
+    }
+    
     private boolean feildIsRightClicked() {
         return Mouse.getMouseB() == 3 && mouseX > 100 && mouseY > 164;
     }
-    private int anim = 0;
+    //private int anim = 0;
     @Override
     public void update() {
-        if (anim > 10000) anim = 0;
-        else anim++;
+//        if (anim > 10000) anim = 0;
+//        else anim++;
         setMousePossition();
         if (feildIsRightClicked()) {
             renderClicks = true;
-            //if (projectiles.isEmpty()) projectiles.add(Projectile.basicCannonball);
-            if (anim % BasicCannonball.FIRE_RATE == 0) {
-                switch (random.nextInt(3)) {
-                    case 0:
-                        projectiles.add(new MasterCannonball(62, 120));
-                        break;
-                    case 1:
-                        projectiles.add(new BasicCannonball(62, 120));
-                        break;
-                    case 2:
-                        projectiles.add(new WindupCannonball(62, 120));
-                        break;
-                }
-                
-            }
+            cannon.requestFireCannon();
         }
         else renderClicks = false;
         for (int i = 0; i < projectiles.size(); i++) {
@@ -117,7 +116,6 @@ public class GrassLevel extends Level {
     @Override
     public void render(Screen screen) {
         screen.renderSprite(0, 50, levelBackgroundSprite);
-        screen.renderSprite(30, 120, Sprite.basic_cannon);
         if (renderClicks) screen.renderSprite(mouseX - (Sprite.basic_ground_click.getWidth() / 2), mouseY - (Sprite.basic_ground_click.getHeight() / 2), Sprite.basic_ground_click);
         for (Projectile pro: projectiles) {
             pro.render(screen);

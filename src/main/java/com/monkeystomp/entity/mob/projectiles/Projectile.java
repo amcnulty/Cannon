@@ -6,33 +6,52 @@
 package com.monkeystomp.entity.mob.projectiles;
 
 import com.monkeystomp.entity.mob.Mob;
-import com.monkeystomp.graphics.Screen;
-import com.monkeystomp.graphics.Sprite;
 
 /**
  *
  * @author Aaron
  */
-public class Projectile extends Mob {
+public abstract class Projectile extends Mob {
     
+    protected double force;
+    protected double angle;
     protected int damage;
     protected int areaOfEffect;
     protected int startingX, startingY;
     protected double xd, yd;
     
-    public Projectile(int x, int y) {
+    public static final int BASICCANNONBALL = 0;
+    public static final int WINDUPCANNONBALL = 1;
+    public static final int MASTERCANNONBALL = 2;
+    
+    public Projectile() {
+    }
+    
+    public void setPosition(int x, int y) {
+        xd = x;
+        yd = x;
         this.x = x;
         this.y = y;
-        xd = x;
-        yd = y;
-        this.startingX = x;
-        this.startingY = y;
+        startingX = x;
+        startingY = y;
     }
     
-    public void update() {
+    public void setTrajectory(double force, double angle) {
+        this.force = force;
+        this.angle = Math.toRadians(angle);
     }
     
-    public void render(Screen screen) {
+    public static Projectile getProjectile(int type) {
+        switch (type) {
+            case BASICCANNONBALL:
+                return new BasicCannonball();
+            case WINDUPCANNONBALL:
+                return new WindupCannonball();
+            case MASTERCANNONBALL:
+                return new MasterCannonball();
+            default:
+                return new BasicCannonball();
+        }
     }
     
 }

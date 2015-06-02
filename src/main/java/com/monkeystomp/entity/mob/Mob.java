@@ -17,9 +17,5 @@ public class Mob extends Entity {
     
     protected Sprite sprite;
     
-    public void update() {
-    }
     
-    public void render(Screen screen) {
-    }
 }

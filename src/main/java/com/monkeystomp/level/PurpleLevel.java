@@ -73,20 +73,25 @@ class PurpleLevel extends Level {
         mouseY = Mouse.getMouseY() / Display.SCALE;
     }
     
+    @Override
+    public void addProjectile(int x, int y) {
+        projectiles.add(Projectile.getProjectile(cannon.loadedProjectile));
+        projectiles.get(projectiles.size() - 1).setPosition(x, y);
+    }
+    
     private boolean feildIsRightClicked() {
         return Mouse.getMouseB() == 3 && mouseX > 100 && mouseY > 164;
     }
     
-    private int anim = 0;
+    //private int anim = 0;
     @Override
     public void update() {
-        if (anim > 10000) anim = 0;
-        else anim++;
+//        if (anim > 10000) anim = 0;
+//        else anim++;
         setMousePossition();
         if (feildIsRightClicked()) {
             renderClicks = true;
-            //if (projectiles.isEmpty()) projectiles.add(Projectile.basicCannonball);
-            if (anim % BasicCannonball.FIRE_RATE == 0) projectiles.add(new BasicCannonball(62, 120));
+            cannon.requestFireCannon();
         }
         else renderClicks = false;
         for (int i = 0; i < projectiles.size(); i++) {
@@ -95,9 +100,9 @@ class PurpleLevel extends Level {
         }
     }
     
+    @Override
     public void render(Screen screen) {
         screen.renderSprite(0, 50, levelBackgroundSprite);
-        screen.renderSprite(30, 120, Sprite.basic_cannon);
         if (renderClicks) screen.renderSprite(mouseX - (Sprite.basic_ground_click.getWidth() / 2), mouseY - (Sprite.basic_ground_click.getHeight() / 2), Sprite.basic_ground_click);
         for (Projectile pro: projectiles) {
             pro.render(screen);

@@ -5,8 +5,7 @@
  */
 package com.monkeystomp.level;
 
-import com.monkeystomp.controls.Mouse;
-import com.monkeystomp.graphics.Display;
+import com.monkeystomp.entity.cannon.Cannon;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
 import java.awt.image.BufferedImage;
@@ -18,12 +17,14 @@ import javax.sound.sampled.Clip;
  *
  * @author aaron
  */
-public class Level {
+public abstract class Level {
     
     // Mouse possition adjusted for SCALE.
     protected int mouseX, mouseY;
     // Tells the render method to show buton click animation
     protected boolean renderClicks = false;
+    // Allows to request the cannon to fire when player right clicks on battlefield.
+    protected Cannon cannon;
     protected int width, height;
     protected int difficulty;
     protected Random random;
@@ -52,6 +53,13 @@ public class Level {
     }
     
     protected void generateLevel() {
+    }
+    
+    public void init(Cannon cannon) {
+        this.cannon = cannon;
+    }
+    
+    public void addProjectile(int x, int y) {
     }
     
     public void stopMusic() {

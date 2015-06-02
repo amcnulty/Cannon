@@ -14,12 +14,11 @@ import com.monkeystomp.graphics.Sprite;
  */
 public class MasterCannonball extends Projectile {
     
-    private int force = 120 - random.nextInt(51);
-    private double angle = Math.toRadians(65.0 - random.nextInt(36));
+//    private int force = 120 - random.nextInt(51);
+//    private double angle = Math.toRadians(65.0 - random.nextInt(36));
     public static final int FIRE_RATE = 1;
     
-    public MasterCannonball(int x, int y) {
-        super(x, y);
+    public MasterCannonball() {
         sprite = Sprite.master_cannonball;
         damage = 400;
         areaOfEffect = 25;
