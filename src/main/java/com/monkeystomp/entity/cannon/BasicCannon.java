@@ -9,6 +9,7 @@ import com.monkeystomp.entity.mob.projectiles.Projectile;
 import com.monkeystomp.graphics.Sprite;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineEvent;
 
 /**
  *
@@ -21,22 +22,9 @@ public class BasicCannon extends Cannon {
         y = 120;
         barrelX = x + 32;
         barrelY = y;
-        reloadTime = 1000000000;
+        reloadTime = 100000000;
         sprite = Sprite.basic_cannon;
         loadedProjectile = Projectile.BASICCANNONBALL;
-        loadSounds();
-    }
-    
-    private void loadSounds() {
-        try {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(Cannon.class.getResource("/audio/sfx/tank_firing.wav"));
-            firingSound = AudioSystem.getClip();
-            firingSound.open(ais);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("Could Not Load Sound Effects In Basic Cannon Class!");
-        }
     }
     
     @Override
@@ -45,9 +33,26 @@ public class BasicCannon extends Cannon {
             level.addProjectile(barrelX, barrelY);
             lastTime = System.nanoTime();
             readyToFire = false;
-            firingSound.stop();
-            firingSound.setFramePosition(0);
-            firingSound.start();
+            Thread audioClipThread = new Thread("Audio Clip") {
+                public void run() {
+                    try {
+                        AudioInputStream ais = AudioSystem.getAudioInputStream(Cannon.class.getResource("/audio/sfx/tank_firing.wav"));
+                        firingSound = AudioSystem.getClip();
+                        firingSound.open(ais);
+                        ais.close();
+                        firingSound.start();
+                        firingSound.addLineListener((LineEvent e) -> {
+                            if (e.getType() == LineEvent.Type.STOP) {
+                                e.getLine().close();
+                            }
+                        });
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            audioClipThread.start();
         }
     }
     

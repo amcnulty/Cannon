@@ -28,14 +28,16 @@ public class BasicCannonball extends Projectile {
     @Override
     public void update() {
         //System.out.println("UPDATING BASIC CANNONBALL anim: " + anim + " X: " + xd + " Y: " + yd);
-        if (anim > 90) {
+        if (anim > 300) {
             anim = 0;
-            remove();
         }
         else {
-            xd = ((anim / 15) * (force * Math.cos(angle)) + startingX);
-            yd = (16 * Math.pow((anim / 15), 2.0)) - ((anim / 15) * (force * Math.sin(angle))) + startingY;
-            anim++;
+            if (xd >= endingX) remove();
+            else {
+                xd = ((anim / 15) * (force * Math.cos(angle)) + startingX);
+                yd = (16 * Math.pow((anim / 15), 2.0)) - ((anim / 15) * (force * Math.sin(angle))) + startingY;
+                anim++;
+            }
         }
         
     }

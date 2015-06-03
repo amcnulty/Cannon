@@ -77,7 +77,7 @@ public class GrassLevel extends Level {
     public void addProjectile(int x, int y) {
         projectiles.add(Projectile.getProjectile(cannon.loadedProjectile));
         projectiles.get(projectiles.size() - 1).setPosition(x, y);
-        projectiles.get(projectiles.size() - 1).setTrajectory(getForce(), cannon.angle);
+        projectiles.get(projectiles.size() - 1).setTrajectory(mouseX, mouseY, getForce(), cannon.angle);
     }
     
     private double getForce() {
@@ -88,8 +88,6 @@ public class GrassLevel extends Level {
         double bottom = Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2) * (y + (x * Math.tan(Math.toRadians(cannon.angle))));
         force = Math.sqrt(top / bottom);
         //force = Math.sqrt( (16 * Math.pow((mouseX - cannon.barrelX), 2.0)) / (Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2.0) * ((mouseY + cannon.barrelY) + ((mouseX - cannon.barrelX) * Math.tan(Math.toDegrees(cannon.angle))))) );
-        System.out.println("mouseX: " + mouseX + " mouseY: " + mouseY + " Force: " + force);
-        System.out.println("Top: " + top + " Bottom: " + bottom);
         return force;
     }
     
