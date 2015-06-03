@@ -17,7 +17,10 @@ public abstract class Projectile extends Mob {
     protected double angle;
     protected int damage;
     protected int areaOfEffect;
+    // These are the coordinates that the projectile originated at.
     protected int startingX, startingY;
+    // These are the coordinates that the projectile is targeted at.
+    protected int endingX, endingY;
     protected double xd, yd;
     
     public static final int BASICCANNONBALL = 0;
@@ -37,7 +40,9 @@ public abstract class Projectile extends Mob {
         startingY = y;
     }
     
-    public void setTrajectory(double force, double angle) {
+    public void setTrajectory(int endingX, int endingY, double force, double angle) {
+        this.endingX = endingX;
+        this.endingY = endingY;
         this.force = force;
         this.angle = Math.toRadians(angle);
     }
