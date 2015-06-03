@@ -23,6 +23,7 @@ public abstract class Projectile extends Mob {
     public static final int BASICCANNONBALL = 0;
     public static final int WINDUPCANNONBALL = 1;
     public static final int MASTERCANNONBALL = 2;
+    public static final int TURTLESHELLCANNONBALL = 3;
     
     public Projectile() {
     }
@@ -49,6 +50,8 @@ public abstract class Projectile extends Mob {
                 return new WindupCannonball();
             case MASTERCANNONBALL:
                 return new MasterCannonball();
+            case TURTLESHELLCANNONBALL:
+                return new TurtleShellCannonball();
             default:
                 return new BasicCannonball();
         }

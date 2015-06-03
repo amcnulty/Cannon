@@ -23,7 +23,7 @@ public class BasicCannon extends Cannon {
         barrelY = y;
         reloadTime = 1000000000;
         sprite = Sprite.basic_cannon;
-        loadedProjectile = Projectile.BASICCANNONBALL;
+        loadedProjectile = Projectile.TURTLESHELLCANNONBALL;
         loadSounds();
     }
     

@@ -6,7 +6,6 @@
 package com.monkeystomp.level;
 
 import com.monkeystomp.controls.Mouse;
-import com.monkeystomp.entity.mob.projectiles.BasicCannonball;
 import com.monkeystomp.entity.mob.projectiles.Projectile;
 import com.monkeystomp.graphics.Display;
 import com.monkeystomp.graphics.Screen;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 /**
  *
