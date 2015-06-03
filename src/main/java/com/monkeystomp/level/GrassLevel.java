@@ -6,10 +6,8 @@
 package com.monkeystomp.level;
 
 import com.monkeystomp.controls.Mouse;
-import com.monkeystomp.entity.mob.projectiles.BasicCannonball;
-import com.monkeystomp.entity.mob.projectiles.MasterCannonball;
 import com.monkeystomp.entity.mob.projectiles.Projectile;
-import com.monkeystomp.entity.mob.projectiles.WindupCannonball;
+import com.monkeystomp.entity.particle.Particle;
 import com.monkeystomp.graphics.Display;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
@@ -26,6 +24,7 @@ import javax.sound.sampled.AudioSystem;
 public class GrassLevel extends Level {
     
     private ArrayList<Projectile> projectiles = new ArrayList<>();
+    private ArrayList<Particle> particles = new ArrayList<>();
     
     public GrassLevel(String path) {
         super(path);
@@ -78,6 +77,12 @@ public class GrassLevel extends Level {
         projectiles.add(Projectile.getProjectile(cannon.loadedProjectile));
         projectiles.get(projectiles.size() - 1).setPosition(x, y);
         projectiles.get(projectiles.size() - 1).setTrajectory(mouseX, mouseY, getForce(), cannon.angle);
+        projectiles.get(projectiles.size() - 1).init(this);
+    }
+    
+    @Override
+    public void addParticle(Particle particle) {
+        particles.add(particle);
     }
     
     private double getForce() {
@@ -109,6 +114,10 @@ public class GrassLevel extends Level {
             if (projectiles.get(i).isRemoved()) projectiles.remove(i);
             else projectiles.get(i).update();
         }
+        for (int i = 0; i < particles.size(); i++) {
+            if (particles.get(i).isRemoved()) particles.remove(i);
+            else particles.get(i).update();
+        }
     }
     
     @Override
@@ -117,6 +126,9 @@ public class GrassLevel extends Level {
         if (renderClicks) screen.renderSprite(mouseX - (Sprite.basic_ground_click.getWidth() / 2), mouseY - (Sprite.basic_ground_click.getHeight() / 2), Sprite.basic_ground_click);
         for (Projectile pro: projectiles) {
             pro.render(screen);
+        }
+        for (Particle par: particles) {
+            par.render(screen);
         }
     }
     

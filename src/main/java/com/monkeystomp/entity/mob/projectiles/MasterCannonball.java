@@ -5,6 +5,7 @@
  */
 package com.monkeystomp.entity.mob.projectiles;
 
+import com.monkeystomp.entity.particle.Particle;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
 
@@ -14,36 +15,45 @@ import com.monkeystomp.graphics.Sprite;
  */
 public class MasterCannonball extends Projectile {
     
-//    private int force = 120 - random.nextInt(51);
-//    private double angle = Math.toRadians(65.0 - random.nextInt(36));
-    public static final int FIRE_RATE = 1;
-    
     public MasterCannonball() {
         sprite = Sprite.master_cannonball;
         damage = 400;
         areaOfEffect = 25;
+        particleAmount = 100;
     }
     
-    double anim = 0;
+    private double getRandomForce() {
+        return (16 + (random.nextDouble() * 45));
+    }
+    
+    private double getRandomAngle() {
+        return (70 + (random.nextDouble() * 30));
+    }
+    
+    private int getColor() {
+        return 0x3401ff;
+    }
+    
     @Override
     public void update() {
-        //System.out.println("UPDATING BASIC CANNONBALL anim: " + anim + " X: " + xd + " Y: " + yd);
-        if (anim > 90) {
-            anim = 0;
+        if (xd >= endingX) {
             remove();
+            // generate an array of particles new Particle(double startingX, double startingY, double force, double angle, int angle);
+            for (int i = 0; i < particleAmount; i++) {
+                level.addParticle(new Particle(endingX, endingY, getRandomForce(), getRandomAngle(), getColor()));
+            }
+            // play explosion sound!
         }
         else {
             xd = ((anim / 15) * (force * Math.cos(angle)) + startingX);
             yd = (16 * Math.pow((anim / 15), 2.0)) - ((anim / 15) * (force * Math.sin(angle))) + startingY;
             anim++;
         }
-        
     }
     
     @Override
     public void render(Screen screen) {
         screen.renderSprite((int)xd - (sprite.getWidth() / 2), (int)yd - (sprite.getHeight() / 2), sprite);
     }
-    
     
 }

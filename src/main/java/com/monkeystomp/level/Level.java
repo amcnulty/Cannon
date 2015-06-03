@@ -6,6 +6,7 @@
 package com.monkeystomp.level;
 
 import com.monkeystomp.entity.cannon.Cannon;
+import com.monkeystomp.entity.particle.Particle;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
 import java.awt.image.BufferedImage;
@@ -60,6 +61,9 @@ public abstract class Level {
     }
     
     public void addProjectile(int x, int y) {
+    }
+    
+    public void addParticle(Particle particle) {
     }
     
     public void stopMusic() {

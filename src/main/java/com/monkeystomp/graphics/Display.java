@@ -29,7 +29,7 @@ public class Display extends Canvas implements Runnable {
     public int width = 416; 
     public int height = width * 9 / 16;
     // The frame is scaled up by this factor.
-    public static final int SCALE = 4;
+    public static final int SCALE = 3;
     //The bottom edge of the toolbar
     private static final int TOOLBAR_BOTTOM_EDGE = 50;
     // Object used to describe the size of the JFrame.

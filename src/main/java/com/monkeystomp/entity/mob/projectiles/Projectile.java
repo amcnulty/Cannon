@@ -13,8 +13,11 @@ import com.monkeystomp.entity.mob.Mob;
  */
 public abstract class Projectile extends Mob {
     
+    // The force the projectile is shot at
     protected double force;
+    // The angle in radians the projectile is fired.
     protected double angle;
+    protected int particleAmount;
     protected int damage;
     protected int areaOfEffect;
     // These are the coordinates that the projectile originated at.
@@ -22,6 +25,8 @@ public abstract class Projectile extends Mob {
     // These are the coordinates that the projectile is targeted at.
     protected int endingX, endingY;
     protected double xd, yd;
+    // Used to animate the projectile
+    protected double anim;
     
     public static final int BASICCANNONBALL = 0;
     public static final int WINDUPCANNONBALL = 1;

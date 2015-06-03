@@ -22,9 +22,9 @@ public class BasicCannon extends Cannon {
         y = 120;
         barrelX = x + 32;
         barrelY = y;
-        reloadTime = 100000000;
+        reloadTime = 1000000000;
         sprite = Sprite.basic_cannon;
-        loadedProjectile = Projectile.TURTLESHELLCANNONBALL;
+        loadedProjectile = Projectile.WINDUPCANNONBALL;
     }
     
     @Override
@@ -58,6 +58,7 @@ public class BasicCannon extends Cannon {
     
     @Override
     public void update() {
+        loadedProjectile = random.nextInt(4);
         if (!readyToFire) {
             if (System.nanoTime() - lastTime >= reloadTime) readyToFire = true;
         }
