@@ -25,6 +25,8 @@ public class Sprite {
     public static Sprite turtle_cannonball = new Sprite("/textures/projectiles/turtle_shell_cannonball.png");
     public static Sprite basic_cannon = new Sprite("/textures/cannons/basic_cannon.png");
     public static Sprite basic_ground_click = new Sprite(16, 16, 0xff0000);
+    public static Sprite reload_bar = new Sprite(100, 10, 0xababab);
+    public static Sprite projectile_selection = new Sprite("/textures/mis/projectile_selection.png");
     
     public Sprite(String path) {
         try {
@@ -58,6 +60,13 @@ public class Sprite {
         }
     }
     
+    public Sprite(int[] pixels, int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.pixels = new int[pixels.length];
+        System.arraycopy(pixels, 0, this.pixels, 0, pixels.length);
+    }
+    
     public int getWidth() {
         return width;
     }
@@ -76,5 +85,25 @@ public class Sprite {
     
     public int getRawY() {
         return rawY;
+    }
+    
+    public static Sprite[] split(SpriteSheet sheet) {
+        int amount = (sheet.getWidth() * sheet.getHeight()) / (sheet.SPRITE_WIDTH * sheet.SPRITE_HEIGHT);
+        Sprite[] sprites = new Sprite[amount];
+        int current = 0;
+        int[] pixels = new int[sheet.SPRITE_WIDTH * sheet.SPRITE_HEIGHT];
+        for (int yp = 0; yp < sheet.getHeight() / sheet.SPRITE_HEIGHT; yp++) {
+            for (int xp = 0; xp < sheet.getWidth() / sheet.SPRITE_WIDTH; xp++) {
+                for (int y = 0; y < sheet.SPRITE_HEIGHT; y++) {
+                    for (int x = 0; x < sheet.SPRITE_WIDTH; x++) {
+                        int xo = x + xp * sheet.SPRITE_WIDTH;
+                        int yo = y + yp * sheet.SPRITE_HEIGHT;
+                        pixels[x + y * sheet.SPRITE_WIDTH] = sheet.getPixels()[xo + yo * sheet.getWidth()];
+                    }
+                }
+                sprites[current++] = new Sprite(pixels, sheet.SPRITE_WIDTH, sheet.SPRITE_WIDTH);
+            }
+        }
+        return sprites;
     }
 }

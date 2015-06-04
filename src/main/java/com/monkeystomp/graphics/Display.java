@@ -37,7 +37,7 @@ public class Display extends Canvas implements Runnable {
     // The window frame.
     public JFrame frame;
     // The Title of the frame.
-    public static String title = "Aaron's Cannon Game Pre-Alpha v0.01";
+    public static String title = "Aaron's Cannon Game Pre-Alpha v0.08";
     // Display Thread variables
     // Set to true when thread is started. Set to false when game is stoped.
     private boolean running = false;
@@ -78,7 +78,7 @@ public class Display extends Canvas implements Runnable {
         level = Level.grassLevel;
         key = new Keyboard();
         mouse = new Mouse();
-        toolbar = new ToolBar(width, height, SCALE, TOOLBAR_BOTTOM_EDGE, this);
+        toolbar = new ToolBar(width, height, SCALE, TOOLBAR_BOTTOM_EDGE, this, key);
         changeLevel(Level.grassLevel);
         initCannon(Cannon.basicCannon);
         gameState = GAME_RUNNING;
@@ -170,8 +170,8 @@ public class Display extends Canvas implements Runnable {
                 return;
             }
         level.render(screen);
-        cannon.render(screen);
         toolbar.render(screen);
+        cannon.render(screen);
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);

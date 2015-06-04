@@ -15,14 +15,10 @@ import com.monkeystomp.graphics.Sprite;
  */
 public class WindupCannonball extends Projectile {
     
-//    private int force = 120 - random.nextInt(50);
-//    private double angle = Math.toRadians(65.0 - random.nextInt(36));
-    public static final int FIRE_RATE = 1;
-    
     public WindupCannonball() {
         sprite = Sprite.windup_cannonball;
-        damage = 200;
-        areaOfEffect = 16;
+        damage = Projectile.WINDUPCANNONBALL_DAMAGE;
+        areaOfEffect = Projectile.WINDUPCANNONBALL_AREA;
         particleAmount = 130;
     }
     

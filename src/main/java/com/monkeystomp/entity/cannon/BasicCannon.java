@@ -5,7 +5,8 @@
  */
 package com.monkeystomp.entity.cannon;
 
-import com.monkeystomp.entity.mob.projectiles.Projectile;
+import com.monkeystomp.controls.ToolBar;
+import com.monkeystomp.graphics.Font;
 import com.monkeystomp.graphics.Sprite;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -23,8 +24,8 @@ public class BasicCannon extends Cannon {
         barrelX = x + 32;
         barrelY = y;
         reloadTime = 1000000000;
+        font = new Font();
         sprite = Sprite.basic_cannon;
-        loadedProjectile = Projectile.WINDUPCANNONBALL;
     }
     
     @Override
@@ -58,9 +59,18 @@ public class BasicCannon extends Cannon {
     
     @Override
     public void update() {
-        loadedProjectile = random.nextInt(4);
+        loadedProjectile = ToolBar.selected_shell;
+        fireStatusMessage = "READY TO FIRE";
         if (!readyToFire) {
-            if (System.nanoTime() - lastTime >= reloadTime) readyToFire = true;
+            now = System.nanoTime();
+            if (now - lastTime >= reloadTime) {
+                readyToFire = true;
+                reloadBarPercent = 1.0;
+            }
+            else {
+                reloadBarPercent = (double)((now - lastTime) % reloadTime) / (double)reloadTime;
+                fireStatusMessage = "-RELOADING-";
+            }
         }
     }
     

@@ -58,6 +58,19 @@ public class Screen {
         
     }
     
+    public void renderReloadBar(int width) {
+        int col;
+        if (width == 100) {
+            col = 0x00ff00;
+        }
+        else col = 0xff0000;
+        for (int y = 27; y < 10 + 27; y++) {
+            for (int x = 160; x < width + 160; x++) {
+                pixels[x + y * this.width] = col;
+            }
+        }
+    }
+    
     public void renderLevel(int backgroundColor, int groundColor) {
         for (int y = TOP_OF_VIEW; y < height; y++) {
             for (int x = 0; x < width; x++) {

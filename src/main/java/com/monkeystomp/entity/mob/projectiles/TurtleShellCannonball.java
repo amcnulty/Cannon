@@ -17,8 +17,8 @@ public class TurtleShellCannonball extends Projectile {
     
     public TurtleShellCannonball() {
         sprite = Sprite.turtle_cannonball;
-        damage = 150;
-        areaOfEffect = 18;
+        damage = Projectile.TURTLESHELLCANNONBALL_DAMAGE;
+        areaOfEffect = Projectile.TURTLESHELLCANNONBALL_AREA;
         particleAmount = 80;
     }
     

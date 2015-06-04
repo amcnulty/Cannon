@@ -17,8 +17,8 @@ public class BasicCannonball extends Projectile {
     
     public BasicCannonball() {
         sprite = Sprite.basic_cannonball;
-        damage = 100;
-        areaOfEffect = 10;
+        damage = Projectile.BASICCANNONBALL_DAMAGE;
+        areaOfEffect = Projectile.BASICCANNONBALL_AREA;
         particleAmount = 50;
     }
     

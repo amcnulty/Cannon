@@ -6,6 +6,8 @@
 package com.monkeystomp.entity.cannon;
 
 import com.monkeystomp.entity.Entity;
+import com.monkeystomp.entity.mob.projectiles.Projectile;
+import com.monkeystomp.graphics.Font;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
 import javax.sound.sampled.Clip;
@@ -19,16 +21,34 @@ public abstract class Cannon extends Entity {
     // This is the end of the barrel where projectiles will originate from.
     public int barrelX, barrelY;
     public double angle = 45.0;
+    
     // reload timer variables
     protected long reloadTime;
     protected long lastTime;
+    protected long now;
+    
+    // The 32 x 32 image of the cannon
     protected Sprite sprite;
+    
+    // Used to print words to the screen.
+    protected Font font;
+    
+    // Message to be printed to the screen right above the reload bar.
+    protected String fireStatusMessage = "";
+    
     // The current projectile loaded in the cannon
-    public int loadedProjectile;
+    public int loadedProjectile  = Projectile.BASICCANNONBALL;
+    
+    // True if the cannon has been reloaded and ready to fire
     protected boolean readyToFire = true;
     
+    // Used to draw the reload bar.
+    protected double reloadBarPercent = 1.0;
+    
+    // Sound clip for the cannon firing
     protected Clip firingSound;
     
+    // All types of cannons
     public static Cannon basicCannon = new BasicCannon();
     
     public void requestFireCannon() {
@@ -38,7 +58,12 @@ public abstract class Cannon extends Entity {
     }
     
     public void render(Screen screen) {
+        // Cannon image
         screen.renderSprite(x, y, sprite);
+        // Reload bar and message
+        screen.renderSprite(160, 27, Sprite.reload_bar);
+        screen.renderReloadBar((int)(100 * reloadBarPercent));
+        font.renderSuperSmallCharacters2(170, 15, fireStatusMessage, screen);
     }
     
 }

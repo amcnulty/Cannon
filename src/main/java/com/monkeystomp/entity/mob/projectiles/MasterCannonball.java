@@ -17,8 +17,8 @@ public class MasterCannonball extends Projectile {
     
     public MasterCannonball() {
         sprite = Sprite.master_cannonball;
-        damage = 400;
-        areaOfEffect = 25;
+        damage = Projectile.MASTERCANNONBALL_DAMAGE;
+        areaOfEffect = Projectile.MASTERCANNONBALL_AREA;
         particleAmount = 100;
     }
     
