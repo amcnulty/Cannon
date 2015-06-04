@@ -8,6 +8,9 @@ package com.monkeystomp.entity.mob.projectiles;
 import com.monkeystomp.entity.particle.Particle;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineEvent;
 
 /**
  *
@@ -36,6 +39,10 @@ public class BasicCannonball extends Projectile {
     
     @Override
     public void update() {
+        if (level.buildingHere((int)xd + 3, (int)yd + 3) || level.buildingHere((int)xd, (int)yd)) {
+            endingX = (int) xd - 1;
+            endingY = (int) yd + 3;
+        }
         if (xd >= endingX) {
             remove();
             // generate an array of particles new Particle(double startingX, double startingY, double force, double angle, int angle);
@@ -43,6 +50,26 @@ public class BasicCannonball extends Projectile {
                 level.addParticle(new Particle(endingX, endingY, getRandomForce(), getRandomAngle(), getColor()));
             }
             // play explosion sound!
+            Thread audioClipThread = new Thread("Audio Clip") {
+                public void run() {
+                    try {
+                        AudioInputStream ais = AudioSystem.getAudioInputStream(Projectile.class.getResource("/audio/sfx/explosions/basic_explosion.wav"));
+                        explosion = AudioSystem.getClip();
+                        explosion.open(ais);
+                        ais.close();
+                        explosion.start();
+                        explosion.addLineListener((LineEvent e) -> {
+                            if (e.getType() == LineEvent.Type.STOP) {
+                                e.getLine().close();
+                            }
+                        });
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            audioClipThread.start();
         }
         else {
             xd = ((anim / 15) * (force * Math.cos(angle)) + startingX);
