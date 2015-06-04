@@ -27,7 +27,6 @@ public class Sprite {
     public static Sprite basic_ground_click = new Sprite(16, 16, 0xff0000);
     public static Sprite reload_bar = new Sprite(100, 10, 0xababab);
     public static Sprite projectile_selection = new Sprite("/textures/mis/projectile_selection.png");
-    public static Sprite brick_5story_building = new Sprite("/textures/buildings/brick_5story_building.png");
     
     public Sprite(String path) {
         try {
