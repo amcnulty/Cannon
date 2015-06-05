@@ -7,6 +7,7 @@ package com.monkeystomp.entity.cannon;
 
 import com.monkeystomp.controls.ToolBar;
 import com.monkeystomp.graphics.Font;
+import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -26,6 +27,7 @@ public class BasicCannon extends Cannon {
         reloadTime = 1000000000;
         font = new Font();
         sprite = Sprite.basic_cannon;
+        muzzleFlash = Sprite.muzzle_flash;
     }
     
     @Override
@@ -34,6 +36,8 @@ public class BasicCannon extends Cannon {
             level.addProjectile(barrelX, barrelY);
             lastTime = System.nanoTime();
             readyToFire = false;
+            showMuzzleFlash = true;
+            muzzleFlashTimer = System.nanoTime();
             Thread audioClipThread = new Thread("Audio Clip") {
                 public void run() {
                     try {
@@ -63,6 +67,7 @@ public class BasicCannon extends Cannon {
         fireStatusMessage = "READY TO FIRE";
         if (!readyToFire) {
             now = System.nanoTime();
+            if (now - muzzleFlashTimer >+ 200000000) showMuzzleFlash = false;
             if (now - lastTime >= reloadTime) {
                 readyToFire = true;
                 reloadBarPercent = 1.0;
@@ -71,6 +76,14 @@ public class BasicCannon extends Cannon {
                 reloadBarPercent = (double)((now - lastTime) % reloadTime) / (double)reloadTime;
                 fireStatusMessage = "-RELOADING-";
             }
+        }
+    }
+    
+    @Override
+    public void render(Screen screen) {
+        super.render(screen);
+        if (showMuzzleFlash) {
+            screen.renderSprite(barrelX - (muzzleFlash.getWidth() / 2), barrelY - (muzzleFlash.getHeight() / 2), muzzleFlash);
         }
     }
     

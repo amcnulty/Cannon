@@ -78,6 +78,9 @@ public class GrassLevel extends Level {
     
     private void addBuildings() {
         buildings.add(new Brick5Story(320, 180));
+        buildings.add(new Brick5Story(280, 199));
+        buildings.add(new Brick5Story(120, 165));
+        buildings.add(new Brick5Story(140, 190));
         
         for (Building build: buildings) {
             build.init(this);
@@ -98,14 +101,15 @@ public class GrassLevel extends Level {
     }
     
     private double getForce() {
-        double force;
-        double x = mouseX - cannon.barrelX;
-        double y = mouseY - cannon.barrelY;
-        double top = 16 * Math.pow(x, 2);
-        double bottom = Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2) * (y + (x * Math.tan(Math.toRadians(cannon.angle))));
-        force = Math.sqrt(top / bottom);
-        //force = Math.sqrt( (16 * Math.pow((mouseX - cannon.barrelX), 2.0)) / (Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2.0) * ((mouseY + cannon.barrelY) + ((mouseX - cannon.barrelX) * Math.tan(Math.toDegrees(cannon.angle))))) );
-        return force;
+//        double force;
+//        double x = mouseX - cannon.barrelX;
+//        double y = mouseY - cannon.barrelY;
+//        double top = 16 * Math.pow(x, 2);
+//        double bottom = Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2) * (y + (x * Math.tan(Math.toRadians(cannon.angle))));
+//        force = Math.sqrt(top / bottom);
+//        //force = Math.sqrt( (16 * Math.pow((mouseX - cannon.barrelX), 2.0)) / (Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2.0) * ((mouseY + cannon.barrelY) + ((mouseX - cannon.barrelX) * Math.tan(Math.toDegrees(cannon.angle))))) );
+        return Math.sqrt((16 * Math.pow((mouseX - cannon.barrelX), 2)) / (Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2) * ((mouseY - cannon.barrelY) + (mouseX - cannon.barrelX) * Math.tan(Math.toRadians(cannon.angle)))));
+        //return force;
     }
     
     private boolean feildIsRightClicked() {
@@ -114,7 +118,7 @@ public class GrassLevel extends Level {
     
     public boolean buildingHere(int x, int y) {
         for (Building build: buildings) {
-            return build.buildingHere(x, y);
+            if (build.buildingHere(x, y)) return true;
         }
         return false;
     }

@@ -19,15 +19,20 @@ public class Sprite {
     private int rawX, rawY;
     public int[] pixels;
     
+    // Cannonball sprites
     public static Sprite basic_cannonball = new Sprite("/textures/projectiles/basic_cannonball.png");
     public static Sprite windup_cannonball = new Sprite("/textures/projectiles/windup_cannonball.png");
     public static Sprite master_cannonball = new Sprite("/textures/projectiles/masterball_cannonball.png");
     public static Sprite turtle_cannonball = new Sprite("/textures/projectiles/turtle_shell_cannonball.png");
+    
+    // Cannon sprites
     public static Sprite basic_cannon = new Sprite("/textures/cannons/basic_cannon.png");
+    
     public static Sprite basic_ground_click = new Sprite(16, 16, 0xff0000);
     public static Sprite reload_bar = new Sprite(100, 10, 0xababab);
     public static Sprite projectile_selection = new Sprite("/textures/mis/projectile_selection.png");
     public static Sprite brick_5story_building = new Sprite("/textures/buildings/brick_5story_building.png");
+    public static Sprite muzzle_flash = new Sprite("/textures/mis/muzzle_flash.png");
     
     public Sprite(String path) {
         try {

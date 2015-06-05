@@ -22,13 +22,20 @@ public abstract class Cannon extends Entity {
     public int barrelX, barrelY;
     public double angle = 45.0;
     
-    // reload timer variables
+    // Timer variables
     protected long reloadTime;
     protected long lastTime;
     protected long now;
+    protected long muzzleFlashTimer;
     
     // The 32 x 32 image of the cannon
     protected Sprite sprite;
+    
+    // The muzzle flash sprite
+    protected Sprite muzzleFlash;
+    
+    // True if showing muzzle flash
+    protected boolean showMuzzleFlash = false;
     
     // Used to print words to the screen.
     protected Font font;

@@ -70,6 +70,7 @@ public class BasicCannonball extends Projectile {
                 }
             };
             audioClipThread.start();
+            // send damage information to the level
         }
         else {
             xd = ((anim / 15) * (force * Math.cos(angle)) + startingX);
