@@ -81,6 +81,7 @@ public class GrassLevel extends Level {
         buildings.add(new Brick5Story(280, 199));
         buildings.add(new Brick5Story(120, 165));
         buildings.add(new Brick5Story(140, 190));
+        buildings.add(new Brick5Story(180, 170));
         
         for (Building build: buildings) {
             build.init(this);
