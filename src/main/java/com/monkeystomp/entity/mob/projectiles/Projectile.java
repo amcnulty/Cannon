@@ -6,6 +6,7 @@
 package com.monkeystomp.entity.mob.projectiles;
 
 import com.monkeystomp.entity.mob.Mob;
+import javax.sound.sampled.Clip;
 
 /**
  *
@@ -36,6 +37,8 @@ public abstract class Projectile extends Mob {
     
     // Used to animate the projectile
     protected double anim;
+    
+    protected Clip explosion;
     
     // The name constants of the projectile.
     public static final String BASICCANNONBALLNAME = "BASIC CANNONBALL";
@@ -90,5 +93,9 @@ public abstract class Projectile extends Mob {
             default:
                 return new BasicCannonball();
         }
+    }
+    
+    @Override
+    public void update() {
     }
 }

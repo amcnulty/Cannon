@@ -8,6 +8,9 @@ package com.monkeystomp.entity.mob.projectiles;
 import com.monkeystomp.entity.particle.Particle;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineEvent;
 
 /**
  *
@@ -36,6 +39,10 @@ public class BasicCannonball extends Projectile {
     
     @Override
     public void update() {
+        if (level.buildingHere((int)xd + 3, (int)yd + 3) || level.buildingHere((int)xd, (int)yd)) {
+            endingX = (int) xd - 1;
+            endingY = (int) yd + 3;
+        }
         if (xd >= endingX) {
             remove();
             // generate an array of particles new Particle(double startingX, double startingY, double force, double angle, int angle);

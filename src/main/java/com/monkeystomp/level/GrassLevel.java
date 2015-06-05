@@ -6,6 +6,8 @@
 package com.monkeystomp.level;
 
 import com.monkeystomp.controls.Mouse;
+import com.monkeystomp.entity.building.Brick5Story;
+import com.monkeystomp.entity.building.Building;
 import com.monkeystomp.entity.mob.projectiles.Projectile;
 import com.monkeystomp.entity.particle.Particle;
 import com.monkeystomp.graphics.Display;
@@ -25,9 +27,11 @@ public class GrassLevel extends Level {
     
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     private ArrayList<Particle> particles = new ArrayList<>();
+    private ArrayList<Building> buildings = new ArrayList<>();
     
     public GrassLevel(String path) {
         super(path);
+        addBuildings();
     }
     
     protected void loadLevel(String path) {
@@ -77,14 +81,12 @@ public class GrassLevel extends Level {
         buildings.add(new Brick5Story(280, 199));
         buildings.add(new Brick5Story(120, 165));
         buildings.add(new Brick5Story(140, 190));
-        buildings.add(new Brick5Story(180, 170));
         
         for (Building build: buildings) {
             build.init(this);
         }
     }
     
-
     @Override
     public void addProjectile(int x, int y) {
         projectiles.add(Projectile.getProjectile(cannon.loadedProjectile));
@@ -120,7 +122,6 @@ public class GrassLevel extends Level {
         }
         return false;
     }
-
     //private int anim = 0;
     @Override
     public void update() {
@@ -132,6 +133,10 @@ public class GrassLevel extends Level {
             cannon.requestFireCannon();
         }
         else renderClicks = false;
+        for (int i = 0; i < buildings.size(); i++) {
+            if (buildings.get(i).isRemoved()) buildings.remove(i);
+            else buildings.get(i).update();
+        }
         for (int i = 0; i < projectiles.size(); i++) {
             if (projectiles.get(i).isRemoved()) projectiles.remove(i);
             else projectiles.get(i).update();
@@ -146,6 +151,9 @@ public class GrassLevel extends Level {
     public void render(Screen screen) {
         screen.renderSprite(0, 50, levelBackgroundSprite);
         if (renderClicks) screen.renderSprite(mouseX - (Sprite.basic_ground_click.getWidth() / 2), mouseY - (Sprite.basic_ground_click.getHeight() / 2), Sprite.basic_ground_click);
+        for (Building build: buildings) {
+            build.render(screen);
+        }
         for (Projectile pro: projectiles) {
             pro.render(screen);
         }

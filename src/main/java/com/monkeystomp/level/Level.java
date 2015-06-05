@@ -75,6 +75,10 @@ public abstract class Level {
         backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
     }
     
+    public boolean buildingHere(int x, int y) {
+        return false;
+    }
+    
     public void update() {
     }
     
