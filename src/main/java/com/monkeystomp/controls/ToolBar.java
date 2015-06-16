@@ -5,6 +5,7 @@
  */
 package com.monkeystomp.controls;
 
+import com.monkeystomp.entity.cannon.Cannon;
 import com.monkeystomp.entity.mob.projectiles.Projectile;
 import com.monkeystomp.graphics.Display;
 import com.monkeystomp.graphics.Font;
@@ -54,6 +55,8 @@ public class ToolBar {
     private static final int BACKGROUNDCOLOR = 0x9393FF;
     // Used to print text to the screen.
     private Font font;
+    // Handle for the cannon
+    private Cannon cannon;
     
     public ToolBar(int width, int height, int scale, int toolbarBottomEdge, Display display, Keyboard key) {
         this.width = width;
@@ -146,6 +149,10 @@ public class ToolBar {
         }
     }
     
+    public void init(Cannon cannon) {
+        this.cannon = cannon;
+    }
+    
     //int anim = 0;
     public void update() {
         key.update();
@@ -153,6 +160,9 @@ public class ToolBar {
         else if (key.key2) selected_shell = Projectile.TURTLESHELLCANNONBALL;
         else if (key.key3) selected_shell = Projectile.MASTERCANNONBALL;
         else if (key.key4) selected_shell = Projectile.WINDUPCANNONBALL;
+        else if (key.r) cannon.changeFiringAngle(1);
+        else if (key.f) cannon.changeFiringAngle(2);
+        else if (key.v) cannon.changeFiringAngle(3);
         setMousePossition();
         checkMouseHover();
     }

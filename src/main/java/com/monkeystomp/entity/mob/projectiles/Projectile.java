@@ -33,7 +33,10 @@ public abstract class Projectile extends Mob {
     protected int startingX, startingY;
     // These are the coordinates that the projectile is targeted at.
     protected int endingX, endingY;
+    // The coordinates of the cannonball
     protected double xd, yd;
+    // The coordinates of the collision
+    protected int xCollision, yCollision;
     
     // Used to animate the projectile
     protected double anim;

@@ -27,12 +27,19 @@ public class Sprite {
     
     // Cannon sprites
     public static Sprite basic_cannon = new Sprite("/textures/cannons/basic_cannon.png");
+    public static Sprite basic_cannon_high = new Sprite("/textures/cannons/basic_cannon_high.png");
+    public static Sprite basic_cannon_low = new Sprite("/textures/cannons/basic_cannon_low.png");
     
     public static Sprite basic_ground_click = new Sprite(16, 16, 0xff0000);
     public static Sprite reload_bar = new Sprite(100, 10, 0xababab);
     public static Sprite projectile_selection = new Sprite("/textures/mis/projectile_selection.png");
-    public static Sprite brick_5story_building = new Sprite("/textures/buildings/brick_5story_building.png");
     public static Sprite muzzle_flash = new Sprite("/textures/mis/muzzle_flash.png");
+    
+    // Brick five story building sprites
+    public static Sprite brick_5story_building = new Sprite("/textures/buildings/brick_5story_building.png");
+    public static Sprite brick_5Stroy_building_low_damage = new Sprite("/textures/buildings/brick_5story_building_low_damage.png");
+    public static Sprite brick_5Stroy_building_medium_damage = new Sprite("/textures/buildings/brick_5story_building_medium_damage.png");
+    public static Sprite brick_5Stroy_building_high_damage = new Sprite("/textures/buildings/brick_5story_building_high_damage.png");
     
     public Sprite(String path) {
         try {

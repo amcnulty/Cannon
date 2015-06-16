@@ -26,10 +26,10 @@ import javax.swing.JFrame;
 public class Display extends Canvas implements Runnable {
     // Varialbes for the JFrame and screen size.
     // Width and Height of the screen before being scaled up by SCALE.
-    public int width = 416; 
-    public int height = width * 9 / 16;
+    public static final int SCREEN_WIDTH = 416; 
+    public static final int SCREEN_HEIGHT = SCREEN_WIDTH * 9 / 16;
     // The frame is scaled up by this factor.
-    public static final int SCALE = 4;
+    public static final int SCALE = 3;
     //The bottom edge of the toolbar
     private static final int TOOLBAR_BOTTOM_EDGE = 50;
     // Object used to describe the size of the JFrame.
@@ -68,17 +68,17 @@ public class Display extends Canvas implements Runnable {
     
     public Display () {
         size = Toolkit.getDefaultToolkit().getScreenSize();
-        size.width = width * SCALE;
-        size.height = height * SCALE;
+        size.width = SCREEN_WIDTH * SCALE;
+        size.height = SCREEN_HEIGHT * SCALE;
         setPreferredSize(size);
         frame = new JFrame();
-        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        image = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-        screen = new Screen(width, height, TOOLBAR_BOTTOM_EDGE);
+        screen = new Screen(SCREEN_WIDTH, SCREEN_HEIGHT, TOOLBAR_BOTTOM_EDGE);
         level = Level.grassLevel;
         key = new Keyboard();
         mouse = new Mouse();
-        toolbar = new ToolBar(width, height, SCALE, TOOLBAR_BOTTOM_EDGE, this, key);
+        toolbar = new ToolBar(SCREEN_WIDTH, SCREEN_HEIGHT, SCALE, TOOLBAR_BOTTOM_EDGE, this, key);
         changeLevel(Level.grassLevel);
         initCannon(Cannon.basicCannon);
         gameState = GAME_RUNNING;
@@ -91,6 +91,7 @@ public class Display extends Canvas implements Runnable {
     public void initCannon(Cannon cannon) {
         this.cannon = cannon;
         level.init(cannon);
+        toolbar.init(cannon);
         cannon.init(level);
     }
     

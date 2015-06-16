@@ -24,7 +24,9 @@ public class BasicCannon extends Cannon {
         y = 120;
         barrelX = x + 32;
         barrelY = y;
+        angle = 45.0;
         reloadTime = 1000000000;
+        accuracy = 30;
         font = new Font();
         sprite = Sprite.basic_cannon;
         muzzleFlash = Sprite.muzzle_flash;
@@ -58,6 +60,33 @@ public class BasicCannon extends Cannon {
                 }
             };
             audioClipThread.start();
+        }
+    }
+    
+    public int getAccuracy() {
+        return accuracy;
+    }
+    
+    public void changeFiringAngle(int number) {
+        switch (number) {
+            case 1:
+                sprite = Sprite.basic_cannon_high;
+                angle = 66.0;
+                barrelX = x + 23;
+                barrelY = y - 3;
+                break;
+            case 2:
+                sprite = Sprite.basic_cannon;
+                angle = 45.0;
+                barrelX = x + 32;
+                barrelY = y;
+                break;
+            case 3:
+                sprite = Sprite.basic_cannon_low;
+                angle = 20.0;
+                barrelX = x + 36;
+                barrelY = y + 8;
+                break;
         }
     }
     

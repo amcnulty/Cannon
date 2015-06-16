@@ -22,6 +22,8 @@ public abstract class Level {
     
     // Mouse possition adjusted for SCALE.
     protected int mouseX, mouseY;
+    // The target of the cannonball adjusted for the cannon's accuracy
+    protected int targetX, targetY;
     // Tells the render method to show buton click animation
     protected boolean renderClicks = false;
     // Allows to request the cannon to fire when player right clicks on battlefield.
@@ -77,6 +79,9 @@ public abstract class Level {
     
     public boolean buildingHere(int x, int y) {
         return false;
+    }
+    
+    public void damageBuilding(int x, int y, int damage) {
     }
     
     public void update() {

@@ -20,7 +20,10 @@ public abstract class Cannon extends Entity {
     
     // This is the end of the barrel where projectiles will originate from.
     public int barrelX, barrelY;
-    public double angle = 45.0;
+    public double angle;
+    
+    // Accuracy variables
+    protected int accuracy;
     
     // Timer variables
     protected long reloadTime;
@@ -59,6 +62,17 @@ public abstract class Cannon extends Entity {
     public static Cannon basicCannon = new BasicCannon();
     
     public void requestFireCannon() {
+    }
+    
+    public int getAccuracy() {
+        return accuracy;
+    }
+    
+    /**
+     * Changes the current sprite of the cannon, the firing angle, and the barrel x and y location.
+     * @param number - 1 if firing high 2 if firing middle 3 if firing low
+     */
+    public void changeFiringAngle(int number) {
     }
     
     public void update() {

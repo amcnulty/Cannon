@@ -18,10 +18,13 @@ public abstract class Building extends Entity {
     protected Sprite sprite;
     
     protected int leftEdge, rightEdge, topEdge, bottomEdge;
-    protected int hitPoints;
+    protected int hitPoints, hitPointsMax;
     
     public boolean buildingHere(int x, int y) {
         return false;
+    }
+    
+    public void damageBuilding(int x, int y, int damage) {
     }
     
     @Override

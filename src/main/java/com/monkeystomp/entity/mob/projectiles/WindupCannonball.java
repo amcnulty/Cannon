@@ -39,10 +39,25 @@ public class WindupCannonball extends Projectile {
     
     @Override
     public void update() {
-        if (level.buildingHere((int)xd + 6, (int)yd + 6) || level.buildingHere((int)xd, (int)yd)) {
+        if (level.buildingHere((int)xd + 6, (int)yd + 6)) {
             endingX = (int) xd - 1;
             endingY = (int) yd + 6;
+            xCollision = (int) xd + 6;
+            yCollision = (int) yd + 6;
         }
+        else if (level.buildingHere((int)xd - 6, (int)yd + 6)) {
+            endingX = (int) xd -1;
+            endingY = (int) yd + 6;
+            xCollision = (int) xd - 6;
+            yCollision = (int) yd + 6;
+        }
+        else if (level.buildingHere((int)xd, (int)yd)) {
+            endingX = (int) xd -1;
+            endingY = (int) yd + 6;
+            xCollision = (int) xd;
+            yCollision = (int) yd;
+        }
+        // Check to see if the cannonball has gone past the x point that was clicked
         if (xd >= endingX) {
             remove();
             // generate an array of particles new Particle(double startingX, double startingY, double force, double angle, int angle);
@@ -70,6 +85,8 @@ public class WindupCannonball extends Projectile {
                 }
             };
             audioClipThread.start();
+            // send damage information to the level
+            level.damageBuilding(xCollision, yCollision, damage);
         }
         else {
             xd = ((anim / 15) * (force * Math.cos(angle)) + startingX);

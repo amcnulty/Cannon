@@ -15,7 +15,7 @@ import java.awt.event.KeyListener;
 public class Keyboard implements KeyListener{
     
     private boolean[] keys = new boolean[200];
-    public boolean escape, key1, key2, key3, key4;
+    public boolean escape, key1, key2, key3, key4, r, f, v;
     
     public void update() {
         escape = keys[KeyEvent.VK_ESCAPE];
@@ -23,6 +23,9 @@ public class Keyboard implements KeyListener{
         key2 = keys[KeyEvent.VK_2];
         key3 = keys[KeyEvent.VK_3];
         key4 = keys[KeyEvent.VK_4];
+        r = keys[KeyEvent.VK_R];
+        f = keys[KeyEvent.VK_F];
+        v = keys[KeyEvent.VK_V];
     }
 
     @Override

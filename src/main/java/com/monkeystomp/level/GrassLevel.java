@@ -91,8 +91,20 @@ public class GrassLevel extends Level {
     public void addProjectile(int x, int y) {
         projectiles.add(Projectile.getProjectile(cannon.loadedProjectile));
         projectiles.get(projectiles.size() - 1).setPosition(x, y);
-        projectiles.get(projectiles.size() - 1).setTrajectory(mouseX, mouseY, getForce(), cannon.angle);
+        projectiles.get(projectiles.size() - 1).setTrajectory(randomizeX(), randomizeY(), getForce(), cannon.angle);
         projectiles.get(projectiles.size() - 1).init(this);
+    }
+    
+    private int randomizeX() {
+        if (random.nextBoolean()) targetX = mouseX + (int)(cannon.getAccuracy() * random.nextDouble());
+        else targetX = mouseX - (int)(cannon.getAccuracy() * random.nextDouble());
+        return targetX;
+    }
+    
+    private int randomizeY() {
+        if (random.nextBoolean()) targetY = mouseY + (int)(cannon.getAccuracy() * random.nextDouble());
+        else targetY = mouseY - (int)(cannon.getAccuracy() * random.nextDouble());
+        return targetY;
     }
     
     @Override
@@ -101,19 +113,11 @@ public class GrassLevel extends Level {
     }
     
     private double getForce() {
-//        double force;
-//        double x = mouseX - cannon.barrelX;
-//        double y = mouseY - cannon.barrelY;
-//        double top = 16 * Math.pow(x, 2);
-//        double bottom = Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2) * (y + (x * Math.tan(Math.toRadians(cannon.angle))));
-//        force = Math.sqrt(top / bottom);
-//        //force = Math.sqrt( (16 * Math.pow((mouseX - cannon.barrelX), 2.0)) / (Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2.0) * ((mouseY + cannon.barrelY) + ((mouseX - cannon.barrelX) * Math.tan(Math.toDegrees(cannon.angle))))) );
-        return Math.sqrt((16 * Math.pow((mouseX - cannon.barrelX), 2)) / (Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2) * ((mouseY - cannon.barrelY) + (mouseX - cannon.barrelX) * Math.tan(Math.toRadians(cannon.angle)))));
-        //return force;
+        return Math.sqrt((16 * Math.pow((targetX - cannon.barrelX), 2)) / (Math.pow(Math.cos(Math.toRadians(cannon.angle)), 2) * ((targetY - cannon.barrelY) + (targetX - cannon.barrelX) * Math.tan(Math.toRadians(cannon.angle)))));
     }
     
     private boolean feildIsRightClicked() {
-        return Mouse.getMouseB() == 3 && mouseX > 100 && mouseY > 164;
+        return Mouse.getMouseB() == 3 && mouseX > 100 && mouseY > 164 && mouseX <= Display.SCREEN_WIDTH && mouseY <= Display.SCREEN_HEIGHT;
     }
     
     public boolean buildingHere(int x, int y) {
@@ -122,6 +126,15 @@ public class GrassLevel extends Level {
         }
         return false;
     }
+    
+    public void damageBuilding(int x, int y, int damage) {
+        for (Building build: buildings) {
+            if (build.buildingHere(x, y)) {
+                build.damageBuilding(x, y, damage);
+            }
+        }
+    }
+    
     //private int anim = 0;
     @Override
     public void update() {
