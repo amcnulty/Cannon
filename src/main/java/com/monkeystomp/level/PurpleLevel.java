@@ -6,7 +6,7 @@
 package com.monkeystomp.level;
 
 import com.monkeystomp.controls.Mouse;
-import com.monkeystomp.entity.mob.projectiles.Projectile;
+import com.monkeystomp.entity.projectiles.Projectile;
 import com.monkeystomp.graphics.Display;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;

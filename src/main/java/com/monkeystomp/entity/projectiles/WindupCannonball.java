@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.monkeystomp.entity.mob.projectiles;
+package com.monkeystomp.entity.projectiles;
 
 import com.monkeystomp.entity.particle.Particle;
 import com.monkeystomp.graphics.Screen;
@@ -16,17 +16,17 @@ import javax.sound.sampled.LineEvent;
  *
  * @author Aaron
  */
-public class BasicCannonball extends Projectile {
+public class WindupCannonball extends Projectile {
     
-    public BasicCannonball() {
-        sprite = Sprite.basic_cannonball;
-        damage = Projectile.BASICCANNONBALL_DAMAGE;
-        areaOfEffect = Projectile.BASICCANNONBALL_AREA;
-        particleAmount = 50;
+    public WindupCannonball() {
+        sprite = Sprite.windup_cannonball;
+        damage = Projectile.WINDUPCANNONBALL_DAMAGE;
+        areaOfEffect = Projectile.WINDUPCANNONBALL_AREA;
+        particleAmount = 130;
     }
     
     private double getRandomForce() {
-        return (8 + (random.nextDouble() * 45));
+        return (20 + (random.nextDouble() * 45));
     }
     
     private double getRandomAngle() {
@@ -34,29 +34,28 @@ public class BasicCannonball extends Projectile {
     }
     
     private int getColor() {
-        return 0xffffff;
+        return 0x111111;
     }
     
     @Override
     public void update() {
-        // Check for collision with building
-        if (level.buildingHere((int)xd + 3, (int)yd + 3)) {
+        if (level.buildingHere((int)xd + 6, (int)yd + 6)) {
             endingX = (int) xd - 1;
-            endingY = (int) yd + 3;
-            xCollision = (int)xd + 3;
-            yCollision = (int)yd + 3;
+            endingY = (int) yd + 6;
+            xCollision = (int) xd + 6;
+            yCollision = (int) yd + 6;
         }
-        else if (level.buildingHere((int)xd - 3, (int)yd + 3)) {
-            endingX = (int) xd - 1;
-            endingY = (int) yd + 3;
-            xCollision = (int)xd - 3;
-            yCollision = (int)yd + 3;
+        else if (level.buildingHere((int)xd - 6, (int)yd + 6)) {
+            endingX = (int) xd -1;
+            endingY = (int) yd + 6;
+            xCollision = (int) xd - 6;
+            yCollision = (int) yd + 6;
         }
         else if (level.buildingHere((int)xd, (int)yd)) {
-            endingX = (int) xd - 1;
-            endingY = (int) yd + 3;
-            xCollision = (int)xd;
-            yCollision = (int)yd;
+            endingX = (int) xd -1;
+            endingY = (int) yd + 6;
+            xCollision = (int) xd;
+            yCollision = (int) yd;
         }
         // Check to see if the cannonball has gone past the x point that was clicked
         if (xd >= endingX) {
@@ -69,7 +68,7 @@ public class BasicCannonball extends Projectile {
             Thread audioClipThread = new Thread("Audio Clip") {
                 public void run() {
                     try {
-                        AudioInputStream ais = AudioSystem.getAudioInputStream(Projectile.class.getResource("/audio/sfx/explosions/basic_explosion.wav"));
+                        AudioInputStream ais = AudioSystem.getAudioInputStream(Projectile.class.getResource("/audio/sfx/explosions/windup_explosion.wav"));
                         explosion = AudioSystem.getClip();
                         explosion.open(ais);
                         ais.close();

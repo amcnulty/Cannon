@@ -6,7 +6,7 @@
 package com.monkeystomp.entity.cannon;
 
 import com.monkeystomp.entity.Entity;
-import com.monkeystomp.entity.mob.projectiles.Projectile;
+import com.monkeystomp.entity.projectiles.Projectile;
 import com.monkeystomp.graphics.Font;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;

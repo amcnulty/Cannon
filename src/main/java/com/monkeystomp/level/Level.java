@@ -28,6 +28,8 @@ public abstract class Level {
     protected boolean renderClicks = false;
     // Allows to request the cannon to fire when player right clicks on battlefield.
     protected Cannon cannon;
+    // Number of updates untill the next wave of enemies is sent
+    protected int nextWaveTimer;
     protected int width, height;
     protected int difficulty;
     protected Random random;
@@ -81,7 +83,19 @@ public abstract class Level {
         return false;
     }
     
+    public boolean mobHere(int x, int y) {
+        return false;
+    }
+    
+    public boolean mobHere(int xa, int ya, int x, int y) {
+        return false;
+    }
+    
     public void damageBuilding(int x, int y, int damage) {
+    }
+    
+    public boolean damageMob(int x, int y, int damage) {
+        return false;
     }
     
     public void update() {

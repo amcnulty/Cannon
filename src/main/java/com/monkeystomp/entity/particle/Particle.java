@@ -38,10 +38,11 @@ public class Particle extends Entity {
     }
     
     public void update() {
-        if (movingDown && y > groundLevel) {
-            remove();
-        }
+        if (movingDown && y > groundLevel) remove();
         else {
+            if (movingDown && y > groundLevel - 12) {
+                if (level.damageMob((int)x, (int)y, 5)) remove();
+            }
             lastY = y;
             x = ((anim / 15) * (force * Math.cos(angle)) + startingX);
             y = (16 * Math.pow((anim / 15), 2.0)) - ((anim / 15) * (force * Math.sin(angle))) + startingY;

@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.monkeystomp.entity.mob.projectiles;
+package com.monkeystomp.entity.projectiles;
 
-import com.monkeystomp.entity.mob.Mob;
+import com.monkeystomp.entity.Entity;
+import com.monkeystomp.graphics.Sprite;
 import javax.sound.sampled.Clip;
 
 /**
  *
  * @author Aaron
  */
-public abstract class Projectile extends Mob {
+public abstract class Projectile extends Entity {
     
     // Variables used to calculate phisics
     // The force the projectile is shot at
@@ -42,6 +43,9 @@ public abstract class Projectile extends Mob {
     protected double anim;
     
     protected Clip explosion;
+    
+    // The sprite of the projectile.
+    protected Sprite sprite;
     
     // The name constants of the projectile.
     public static final String BASICCANNONBALLNAME = "BASIC CANNONBALL";

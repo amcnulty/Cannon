@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.monkeystomp.entity.mob.projectiles;
+package com.monkeystomp.entity.projectiles;
 
 import com.monkeystomp.entity.particle.Particle;
 import com.monkeystomp.graphics.Screen;

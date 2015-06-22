@@ -19,6 +19,22 @@ public class Sprite {
     private int rawX, rawY;
     public int[] pixels;
     
+    // Mob sprites
+    public static final Sprite policeman_down_standing = new Sprite(16, 0, 0, SpriteSheet.policeman_sprite_sheet);
+    public static final Sprite policeman_right_standing = new Sprite(16, 0, 1, SpriteSheet.policeman_sprite_sheet);
+    public static final Sprite policeman_up_standing = new Sprite(16, 0, 2, SpriteSheet.policeman_sprite_sheet);
+    public static final Sprite policeman_left_standing = new Sprite(16, 2, 3, SpriteSheet.policeman_sprite_sheet);
+    
+    public static final Sprite policeman_down_walking_1 = new Sprite(16, 1, 0, SpriteSheet.policeman_sprite_sheet);
+    public static final Sprite policeman_right_walking_1 = new Sprite(16, 1, 1, SpriteSheet.policeman_sprite_sheet);
+    public static final Sprite policeman_up_walking_1 = new Sprite(16, 1, 2, SpriteSheet.policeman_sprite_sheet);
+    public static final Sprite policeman_left_walking_1 = new Sprite(16, 1, 3, SpriteSheet.policeman_sprite_sheet);
+    
+    public static final Sprite policeman_down_walking_2 = new Sprite(16, 2, 0, SpriteSheet.policeman_sprite_sheet);
+    public static final Sprite policeman_right_walking_2 = new Sprite(16, 2, 1, SpriteSheet.policeman_sprite_sheet);
+    public static final Sprite policeman_up_walking_2 = new Sprite(16, 2, 2, SpriteSheet.policeman_sprite_sheet);
+    public static final Sprite policeman_left_walking_2 = new Sprite(16, 0, 3, SpriteSheet.policeman_sprite_sheet);
+    
     // Cannonball sprites
     public static Sprite basic_cannonball = new Sprite("/textures/projectiles/basic_cannonball.png");
     public static Sprite windup_cannonball = new Sprite("/textures/projectiles/windup_cannonball.png");
@@ -40,7 +56,30 @@ public class Sprite {
     public static Sprite brick_5Stroy_building_low_damage = new Sprite("/textures/buildings/brick_5story_building_low_damage.png");
     public static Sprite brick_5Stroy_building_medium_damage = new Sprite("/textures/buildings/brick_5story_building_medium_damage.png");
     public static Sprite brick_5Stroy_building_high_damage = new Sprite("/textures/buildings/brick_5story_building_high_damage.png");
+    public static Sprite brick_5story_building_destroyed = new Sprite("/textures/buildings/brick_5story_building_destroyed.png");
     
+    /**
+     * Use this constructor to get a square sprite from a sprite sheet.
+     * @param size - Edge length of the square sprite.
+     * @param xloc - X location of the sprite on the sprite sheet.
+     * @param yloc - Y location of the sprite on the sprite sheet.
+     * @param sheet - The sprite sheet that is being referenced.
+     */
+    public Sprite(int size, int xloc, int yloc, SpriteSheet sheet) {
+        this.width = size;
+        this.height = size;
+        pixels = new int[size * size];
+        for (int y = 0; y < sheet.SPRITE_HEIGHT; y++) {
+            for (int x = 0; x < sheet.SPRITE_WIDTH; x++) {
+                pixels[x + y * this.width] = sheet.pixels[(x + (size * xloc)) + (y +(size * yloc)) * sheet.getWidth()];
+            }
+        }
+    }
+    
+    /**
+     * Use this constructor to load a single sprite directly from a file.
+     * @param path - The local path location of the resource.
+     */
     public Sprite(String path) {
         try {
             BufferedImage image = ImageIO.read(Sprite.class.getResource(path));

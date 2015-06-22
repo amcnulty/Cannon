@@ -27,22 +27,21 @@ public class Brick5Story extends Building {
     
     @Override
     public boolean buildingHere(int x, int y) {
+        if (sprite == Sprite.brick_5story_building_destroyed) return false;
         return x > leftEdge && x < rightEdge && y > topEdge && y < bottomEdge;
     }
     
-    public void damageBuilding(int x, int y, int damage) {
-        if (buildingHere(x, y)) {
+    @Override
+    public void damageBuilding(int damage) {
             hitPoints -= damage;
-        }
     }
     
     @Override
     public void update() {
-        if (hitPoints == hitPointsMax);
-        else if (hitPoints < hitPointsMax && hitPoints > hitPointsMax * .6) sprite = Sprite.brick_5Stroy_building_low_damage;
+        if (hitPoints < hitPointsMax && hitPoints > hitPointsMax * .6) sprite = Sprite.brick_5Stroy_building_low_damage;
         else if (hitPoints < hitPointsMax * .6 && hitPoints > hitPointsMax * .3) sprite = Sprite.brick_5Stroy_building_medium_damage;
         else if (hitPoints < hitPointsMax * .3 && hitPoints > 0) sprite = Sprite.brick_5Stroy_building_high_damage;
-        else if (hitPoints <= 0) remove();
+        else if (hitPoints <= 0) sprite = Sprite.brick_5story_building_destroyed;
     }
     
 }

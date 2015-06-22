@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.monkeystomp.entity.mob.projectiles;
+package com.monkeystomp.entity.projectiles;
 
 import com.monkeystomp.entity.particle.Particle;
 import com.monkeystomp.graphics.Screen;
@@ -14,19 +14,19 @@ import javax.sound.sampled.LineEvent;
 
 /**
  *
- * @author aaron
+ * @author Aaron
  */
-public class TurtleShellCannonball extends Projectile {
+public class BasicCannonball extends Projectile {
     
-    public TurtleShellCannonball() {
-        sprite = Sprite.turtle_cannonball;
-        damage = Projectile.TURTLESHELLCANNONBALL_DAMAGE;
-        areaOfEffect = Projectile.TURTLESHELLCANNONBALL_AREA;
-        particleAmount = 80;
+    public BasicCannonball() {
+        sprite = Sprite.basic_cannonball;
+        damage = Projectile.BASICCANNONBALL_DAMAGE;
+        areaOfEffect = Projectile.BASICCANNONBALL_AREA;
+        particleAmount = 50;
     }
     
     private double getRandomForce() {
-        return (13 + (random.nextDouble() * 45));
+        return (8 + (random.nextDouble() * 45));
     }
     
     private double getRandomAngle() {
@@ -34,29 +34,29 @@ public class TurtleShellCannonball extends Projectile {
     }
     
     private int getColor() {
-        return 0x15ff15;
+        return 0xffffff;
     }
     
     @Override
     public void update() {
         // Check for collision with building
-        if (level.buildingHere((int)xd + 6, (int)yd + 6)) {
+        if (level.buildingHere((int)xd + 3, (int)yd + 3)) {
             endingX = (int) xd - 1;
-            endingY = (int) yd + 6;
-            xCollision = (int) xd + 6;
-            yCollision = (int) yd + 6;
+            endingY = (int) yd + 3;
+            xCollision = (int)xd + 3;
+            yCollision = (int)yd + 3;
         }
-        else if (level.buildingHere((int)xd - 6, (int)yd + 6)) {
+        else if (level.buildingHere((int)xd - 3, (int)yd + 3)) {
             endingX = (int) xd - 1;
-            endingY = (int) yd + 6;
-            xCollision = (int) xd - 6;
-            yCollision = (int) yd + 6;
+            endingY = (int) yd + 3;
+            xCollision = (int)xd - 3;
+            yCollision = (int)yd + 3;
         }
         else if (level.buildingHere((int)xd, (int)yd)) {
             endingX = (int) xd - 1;
-            endingY = (int) yd + 6;
-            xCollision = (int) xd;
-            yCollision = (int) yd;
+            endingY = (int) yd + 3;
+            xCollision = (int)xd;
+            yCollision = (int)yd;
         }
         // Check to see if the cannonball has gone past the x point that was clicked
         if (xd >= endingX) {
@@ -69,7 +69,7 @@ public class TurtleShellCannonball extends Projectile {
             Thread audioClipThread = new Thread("Audio Clip") {
                 public void run() {
                     try {
-                        AudioInputStream ais = AudioSystem.getAudioInputStream(Projectile.class.getResource("/audio/sfx/explosions/turtle_explosion.wav"));
+                        AudioInputStream ais = AudioSystem.getAudioInputStream(Projectile.class.getResource("/audio/sfx/explosions/basic_explosion.wav"));
                         explosion = AudioSystem.getClip();
                         explosion.open(ais);
                         ais.close();
@@ -100,4 +100,5 @@ public class TurtleShellCannonball extends Projectile {
     public void render(Screen screen) {
         screen.renderSprite((int)xd - (sprite.getWidth() / 2), (int)yd - (sprite.getHeight() / 2), sprite);
     }
+    
 }

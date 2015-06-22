@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.monkeystomp.entity.mob.projectiles;
+package com.monkeystomp.entity.projectiles;
 
 import com.monkeystomp.entity.particle.Particle;
 import com.monkeystomp.graphics.Screen;
@@ -14,19 +14,19 @@ import javax.sound.sampled.LineEvent;
 
 /**
  *
- * @author Aaron
+ * @author aaron
  */
-public class WindupCannonball extends Projectile {
+public class TurtleShellCannonball extends Projectile {
     
-    public WindupCannonball() {
-        sprite = Sprite.windup_cannonball;
-        damage = Projectile.WINDUPCANNONBALL_DAMAGE;
-        areaOfEffect = Projectile.WINDUPCANNONBALL_AREA;
-        particleAmount = 130;
+    public TurtleShellCannonball() {
+        sprite = Sprite.turtle_cannonball;
+        damage = Projectile.TURTLESHELLCANNONBALL_DAMAGE;
+        areaOfEffect = Projectile.TURTLESHELLCANNONBALL_AREA;
+        particleAmount = 80;
     }
     
     private double getRandomForce() {
-        return (20 + (random.nextDouble() * 45));
+        return (13 + (random.nextDouble() * 45));
     }
     
     private double getRandomAngle() {
@@ -34,11 +34,12 @@ public class WindupCannonball extends Projectile {
     }
     
     private int getColor() {
-        return 0x111111;
+        return 0x15ff15;
     }
     
     @Override
     public void update() {
+        // Check for collision with building
         if (level.buildingHere((int)xd + 6, (int)yd + 6)) {
             endingX = (int) xd - 1;
             endingY = (int) yd + 6;
@@ -46,13 +47,13 @@ public class WindupCannonball extends Projectile {
             yCollision = (int) yd + 6;
         }
         else if (level.buildingHere((int)xd - 6, (int)yd + 6)) {
-            endingX = (int) xd -1;
+            endingX = (int) xd - 1;
             endingY = (int) yd + 6;
             xCollision = (int) xd - 6;
             yCollision = (int) yd + 6;
         }
         else if (level.buildingHere((int)xd, (int)yd)) {
-            endingX = (int) xd -1;
+            endingX = (int) xd - 1;
             endingY = (int) yd + 6;
             xCollision = (int) xd;
             yCollision = (int) yd;
@@ -68,7 +69,7 @@ public class WindupCannonball extends Projectile {
             Thread audioClipThread = new Thread("Audio Clip") {
                 public void run() {
                     try {
-                        AudioInputStream ais = AudioSystem.getAudioInputStream(Projectile.class.getResource("/audio/sfx/explosions/windup_explosion.wav"));
+                        AudioInputStream ais = AudioSystem.getAudioInputStream(Projectile.class.getResource("/audio/sfx/explosions/turtle_explosion.wav"));
                         explosion = AudioSystem.getClip();
                         explosion.open(ais);
                         ais.close();
@@ -99,5 +100,4 @@ public class WindupCannonball extends Projectile {
     public void render(Screen screen) {
         screen.renderSprite((int)xd - (sprite.getWidth() / 2), (int)yd - (sprite.getHeight() / 2), sprite);
     }
-    
 }

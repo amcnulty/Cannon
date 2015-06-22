@@ -24,7 +24,7 @@ public abstract class Building extends Entity {
         return false;
     }
     
-    public void damageBuilding(int x, int y, int damage) {
+    public void damageBuilding(int damage) {
     }
     
     @Override

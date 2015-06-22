@@ -21,11 +21,26 @@ public class SpriteSheet {
     private int width, height;
     public int[] pixels;
     
+    public static SpriteSheet policeman_sprite_sheet = new SpriteSheet("/textures/characters/policeman_sprite_sheet.png", 3, 4);
+    
     public SpriteSheet(String path, int size) {
-		this.path = path;
-		SPRITE_WIDTH = size;
-		SPRITE_HEIGHT = size;
-		load();
+        this.path = path;
+        SPRITE_WIDTH = size;
+        SPRITE_HEIGHT = size;
+        load();
+    }
+    
+    /**
+     * Use this constructor for sprite sheets with all the same size sprites.
+     * @param path - The local path location of the resource.
+     * @param width - Number of sprites horizontally.
+     * @param height - Number of sprites vertically.
+     */
+    public SpriteSheet(String path, int width, int height) {
+        this.path = path;
+        load();
+        SPRITE_WIDTH = this.width / width;
+        SPRITE_HEIGHT = this.height / height;
     }
     
     private void load() {
@@ -37,6 +52,7 @@ public class SpriteSheet {
             image.getRGB(0, 0, width, height, pixels, 0, width);
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Failed to load sprite sheet!!");
         }
     }
     
