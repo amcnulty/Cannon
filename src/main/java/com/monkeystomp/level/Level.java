@@ -7,6 +7,7 @@ package com.monkeystomp.level;
 
 import com.monkeystomp.entity.cannon.Cannon;
 import com.monkeystomp.entity.particle.Particle;
+import com.monkeystomp.entity.platform.Platform;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
 import java.awt.image.BufferedImage;
@@ -28,6 +29,8 @@ public abstract class Level {
     protected boolean renderClicks = false;
     // Allows to request the cannon to fire when player right clicks on battlefield.
     protected Cannon cannon;
+    // Allows to send damage information from the mob to the platform.
+    protected Platform platform;
     // Number of updates untill the next wave of enemies is sent
     protected int nextWaveTimer;
     protected int width, height;
@@ -60,8 +63,9 @@ public abstract class Level {
     protected void generateLevel() {
     }
     
-    public void init(Cannon cannon) {
+    public void init(Cannon cannon, Platform platform) {
         this.cannon = cannon;
+        this.platform = platform;
     }
     
     public void addProjectile(int x, int y) {
@@ -96,6 +100,9 @@ public abstract class Level {
     
     public boolean damageMob(int x, int y, int damage) {
         return false;
+    }
+    
+    public void damagePlatform(int damage) {
     }
     
     public void update() {

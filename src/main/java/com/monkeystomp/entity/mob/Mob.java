@@ -18,13 +18,19 @@ public class Mob extends Entity {
     
     private Sprite sprite;
     private boolean walking;
+    private boolean showingRed;
+    private boolean attacking;
     private final int mobType;
     private int dir;
     private int anim;
     private int hitPoints;
-    private boolean showingRed;
+    private int attackDamage;
+    private int attackSpeed;
     private int showingRedTimer;
     private Sprite redSprite;
+    
+    // Corrdinates when the mob should start attacking.
+    private int attackX, attackY;
     
     private ArrayList<int[]> destinations = new ArrayList<>();
     private int routePosition = 0;
@@ -39,7 +45,9 @@ public class Mob extends Entity {
         sprite = Sprite.policeman_down_standing;
         switch(mobType) {
             case POLICEMAN:
-                hitPoints = 20;
+                hitPoints = 25;
+                attackDamage = 5;
+                attackSpeed = 30;
                 break;
         }
     }
@@ -47,6 +55,11 @@ public class Mob extends Entity {
     public void setDestination(int x, int y) {
         int[] corrdinates = {x, y};
         destinations.add(corrdinates);
+    }
+    
+    public void attackAtPoint(int x, int y) {
+        attackX = x;
+        attackY = y;
     }
     
     private void move(int xa, int ya) {
@@ -79,37 +92,37 @@ public class Mob extends Entity {
             switch (dir) {
                 case 0:
                     sprite = Sprite.policeman_up_standing;
-                    if (walking && anim < 10) {
+                    if (walking && anim % 20 < 10) {
                         sprite = Sprite.policeman_up_walking_1;
                     }
-                    else if (walking && anim > 9) {
+                    else if (walking && anim % 20 >= 10) {
                         sprite = Sprite.policeman_up_walking_2;
                     }
                     break;
                 case 1:
                     sprite = Sprite.policeman_right_standing;
-                    if (walking && anim < 10) {
+                    if (walking && anim % 20 < 10) {
                         sprite = Sprite.policeman_right_walking_1;
                     }
-                    else if (walking && anim > 9) {
+                    else if (walking && anim % 20 >= 10) {
                         sprite = Sprite.policeman_right_walking_2;
                     }
                     break;
                 case 2:
                     sprite = Sprite.policeman_down_standing;
-                    if (walking && anim < 10) {
+                    if (walking && anim % 20 < 10) {
                         sprite = Sprite.policeman_down_walking_1;
                     }
-                    else if (walking && anim > 9) {
+                    else if (walking && anim % 20 >= 10) {
                         sprite = Sprite.policeman_down_walking_2;
                     }
                     break;
                 case 3:
                     sprite = Sprite.policeman_left_standing;
-                    if (walking && anim < 10) {
+                    if (walking && anim % 20 < 10) {
                         sprite = Sprite.policeman_left_walking_1;
                     }
-                    else if (walking && anim > 9) {
+                    else if (walking && anim % 20 >= 10) {
                         sprite = Sprite.policeman_left_walking_2;
                     }
                     break;
@@ -120,8 +133,10 @@ public class Mob extends Entity {
     
     public void update() {
         if (hitPoints <= 0) remove();
-        if (anim >= 20) anim = 0;
+        if (anim >= 60) anim = 0;
         else anim++;
+        
+        // Controls the movement of this mob.
         if (routePosition < destinations.size()) {
             if (destinations.get(routePosition)[0] > x) move(1, 0);
             else if (destinations.get(routePosition)[0] < x) move(-1, 0);
@@ -130,7 +145,11 @@ public class Mob extends Entity {
             if (destinations.get(routePosition)[0] == x && destinations.get(routePosition)[1] == y) routePosition++;
         }
         else walking = false;
+        
+        // Sets sprite to whatever the current animation is.
         setSprite();
+        
+        // Controls when this mob will turn red.
         if (showingRed) {
             if (showingRedTimer >= 60) {
                 showingRed = false;
@@ -143,6 +162,11 @@ public class Mob extends Entity {
                 }
                 showingRedTimer++;
             }
+        }
+        
+        if (x == attackX && y == attackY && anim % attackSpeed == 0) {
+            attacking = true;
+            level.damagePlatform(attackDamage);
         }
     }
     

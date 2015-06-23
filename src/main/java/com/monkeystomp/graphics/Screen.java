@@ -71,6 +71,15 @@ public class Screen {
         }
     }
     
+    public void renderCannonHealth(int width) {
+        for (int y = 27; y < 10 + 27; y++) {
+            for (int x = 300; x < width + 300; x++) {
+                pixels[x + y * this.width] = 0x00ff00;
+            }
+        }
+        
+    }
+    
     public void renderLevel(int backgroundColor, int groundColor) {
         for (int y = TOP_OF_VIEW; y < height; y++) {
             for (int x = 0; x < width; x++) {

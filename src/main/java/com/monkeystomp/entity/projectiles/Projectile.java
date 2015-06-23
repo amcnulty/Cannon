@@ -53,6 +53,12 @@ public abstract class Projectile extends Entity {
     public static final String MASTERCANNONBALLNAME = "MASTER CANNONBALL";
     public static final String WINDUPCANNONBALLNAME = "WIND-UP CANNONBALL";
     
+    // Projectile reload time constants.
+    public static final int BASICCANNONBALL_RELOAD_TIME = 500000000;
+    public static final int TURTLESHELLCANNONBALL_RELOAD_TIME = 750000000;
+    public static final int MASTERCANNONBALL_RELOAD_TIME = 850000000;
+    public static final int WINDUPCANNONBALL_RELOAD_TIME = 1000000000;
+    
     // Projectile damage constants.
     public static final int BASICCANNONBALL_DAMAGE = 100;
     public static final int TURTLESHELLCANNONBALL_DAMAGE = 180;

@@ -6,6 +6,7 @@
 package com.monkeystomp.entity.cannon;
 
 import com.monkeystomp.controls.ToolBar;
+import com.monkeystomp.entity.projectiles.Projectile;
 import com.monkeystomp.graphics.Font;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
@@ -93,6 +94,20 @@ public class BasicCannon extends Cannon {
     @Override
     public void update() {
         loadedProjectile = ToolBar.selected_shell;
+        switch (loadedProjectile) {
+            case Projectile.BASICCANNONBALL:
+                reloadTime = Projectile.BASICCANNONBALL_RELOAD_TIME;
+                break;
+            case Projectile.TURTLESHELLCANNONBALL:
+                reloadTime = Projectile.TURTLESHELLCANNONBALL_RELOAD_TIME;
+                break;
+            case Projectile.MASTERCANNONBALL:
+                reloadTime = Projectile.MASTERCANNONBALL_RELOAD_TIME;
+                break;
+            case Projectile.WINDUPCANNONBALL:
+                reloadTime = Projectile.WINDUPCANNONBALL_RELOAD_TIME;
+                break;
+        }
         fireStatusMessage = "READY TO FIRE";
         if (!readyToFire) {
             now = System.nanoTime();
@@ -102,7 +117,7 @@ public class BasicCannon extends Cannon {
                 reloadBarPercent = 1.0;
             }
             else {
-                reloadBarPercent = (double)((now - lastTime) % reloadTime) / (double)reloadTime;
+                reloadBarPercent = (double)((now - lastTime)) / (double)reloadTime;
                 fireStatusMessage = "-RELOADING-";
             }
         }

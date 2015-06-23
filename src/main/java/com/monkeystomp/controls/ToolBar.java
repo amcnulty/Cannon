@@ -6,6 +6,7 @@
 package com.monkeystomp.controls;
 
 import com.monkeystomp.entity.cannon.Cannon;
+import com.monkeystomp.entity.platform.Platform;
 import com.monkeystomp.entity.projectiles.Projectile;
 import com.monkeystomp.graphics.Display;
 import com.monkeystomp.graphics.Font;
@@ -190,6 +191,7 @@ public class ToolBar {
                 screen.renderSprite(81, 18, Sprite.projectile_selection);
                 break;
         }
+        // Info boxes next to cursor.
         if (showInfoBox1) {
             screen.renderSprite(mouseX, mouseY + 20, infoBoxSlotOne);
             font.renderSuperSmallCharacters2(mouseX + 3, mouseY + 23, Projectile.BASICCANNONBALLNAME, screen);

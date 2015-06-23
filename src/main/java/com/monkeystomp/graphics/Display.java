@@ -9,6 +9,7 @@ import com.monkeystomp.entity.cannon.Cannon;
 import com.monkeystomp.controls.Keyboard;
 import com.monkeystomp.controls.Mouse;
 import com.monkeystomp.controls.ToolBar;
+import com.monkeystomp.entity.platform.Platform;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -62,6 +63,8 @@ public class Display extends Canvas implements Runnable {
     public Level level;
     // Used to update and render a specific cannon
     public Cannon cannon;
+    // Used to update and render a specific platform
+    public Platform platform;
     // Allows access to mouse and keyboard input.
     private Keyboard key;
     private Mouse mouse;
@@ -80,7 +83,7 @@ public class Display extends Canvas implements Runnable {
         mouse = new Mouse();
         toolbar = new ToolBar(SCREEN_WIDTH, SCREEN_HEIGHT, SCALE, TOOLBAR_BOTTOM_EDGE, this, key);
         changeLevel(Level.grassLevel);
-        initCannon(Cannon.basicCannon);
+        initGame(Cannon.basicCannon, Platform.basicPlatform);
         gameState = GAME_RUNNING;
         
         addKeyListener(key);
@@ -88,11 +91,13 @@ public class Display extends Canvas implements Runnable {
         addMouseMotionListener(mouse);
     }
     
-    public void initCannon(Cannon cannon) {
+    public void initGame(Cannon cannon, Platform platform) {
         this.cannon = cannon;
-        level.init(cannon);
+        this.platform = platform;
+        level.init(cannon, platform);
         toolbar.init(cannon);
         cannon.init(level);
+        platform.init(level);
     }
     
     public void changeLevel(Level level) {
@@ -154,6 +159,7 @@ public class Display extends Canvas implements Runnable {
     private void update() {
         switch (gameState) {
             case GAME_RUNNING:
+                platform.update();
                 level.update();
                 toolbar.update();
                 cannon.update();
@@ -166,12 +172,13 @@ public class Display extends Canvas implements Runnable {
     
     private void render() {
         BufferStrategy bs = getBufferStrategy();
-            if (bs == null) {
-                createBufferStrategy(3);
-                return;
-            }
+        if (bs == null) {
+            createBufferStrategy(3);
+            return;
+        }
         level.render(screen);
         toolbar.render(screen);
+        platform.render(screen);
         cannon.render(screen);
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
         Graphics g = bs.getDrawGraphics();

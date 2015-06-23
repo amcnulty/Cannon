@@ -105,22 +105,24 @@ public class GrassLevel extends Level {
         if (random.nextBoolean()) {
             for (int i = 0; i < random.nextInt(2) + 3; i++) {
                 enemies.add(new Mob(200 + random.nextInt(30), (220 + (10 * i)) + random.nextInt(10), Mob.POLICEMAN));
-                for (int ii = 0; ii < 20; ii++) {
+                for (int ii = 0; ii < 1; ii++) {
                     enemies.get(enemies.size() - 1).setDestination(190 + random.nextInt(50), 182 + random.nextInt(23));
                     enemies.get(enemies.size() - 1).setDestination(380 + random.nextInt(30), 182 + random.nextInt(23));
                 }
-                //enemies.get(enemies.size() - 1).setDestination(100, 192);
+                enemies.get(enemies.size() - 1).setDestination(100, 192);
+                enemies.get(enemies.size() - 1).attackAtPoint(100, 192);
                 enemies.get(enemies.size() - 1).init(this);
             }
         }
         else {
             for (int i = 0; i < random.nextInt(2) + 3; i++) {
                 enemies.add(new Mob(400 + (18 * i) + random.nextInt(10), 180 + random.nextInt(25), Mob.POLICEMAN));
-                for (int ii = 0; ii < 20; ii++) {
+                for (int ii = 0; ii < 1; ii++) {
                     enemies.get(enemies.size() - 1).setDestination(190 + random.nextInt(50), 182 + random.nextInt(23));
                     enemies.get(enemies.size() - 1).setDestination(380 + random.nextInt(30), 182 + random.nextInt(23));
                 }
-                //enemies.get(enemies.size() - 1).setDestination(100, 192);
+                enemies.get(enemies.size() - 1).setDestination(100, 192);
+                enemies.get(enemies.size() - 1).attackAtPoint(100, 192);
                 enemies.get(enemies.size() - 1).init(this);
             }
         }
@@ -207,6 +209,10 @@ public class GrassLevel extends Level {
             }
         }
         return false;
+    }
+    
+    public void damagePlatform(int damage) {
+        platform.damagePlatform(damage);
     }
     
     private int anim = 0;
