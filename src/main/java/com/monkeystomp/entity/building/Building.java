@@ -16,7 +16,7 @@ import com.monkeystomp.graphics.Sprite;
 public abstract class Building extends Entity {
     
     protected Sprite sprite;
-    
+    protected int points;
     protected int leftEdge, rightEdge, topEdge, bottomEdge;
     protected int hitPoints, hitPointsMax;
     

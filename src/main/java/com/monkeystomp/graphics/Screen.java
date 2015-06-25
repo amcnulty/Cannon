@@ -65,7 +65,7 @@ public class Screen {
         }
         else col = 0xff0000;
         for (int y = 27; y < 10 + 27; y++) {
-            for (int x = 160; x < width + 160; x++) {
+            for (int x = 115; x < width + 115; x++) {
                 pixels[x + y * this.width] = col;
             }
         }
@@ -73,7 +73,7 @@ public class Screen {
     
     public void renderCannonHealth(int width) {
         for (int y = 27; y < 10 + 27; y++) {
-            for (int x = 300; x < width + 300; x++) {
+            for (int x = 225; x < width + 225; x++) {
                 pixels[x + y * this.width] = 0x00ff00;
             }
         }

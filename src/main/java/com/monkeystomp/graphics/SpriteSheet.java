@@ -21,7 +21,8 @@ public class SpriteSheet {
     private int width, height;
     public int[] pixels;
     
-    public static SpriteSheet policeman_sprite_sheet = new SpriteSheet("/textures/characters/policeman_sprite_sheet.png", 3, 4);
+    public static SpriteSheet policeman_sprite_sheet = new SpriteSheet("/textures/characters/policeman_sprite_sheet.png", 3, 5);
+    public static SpriteSheet mouse_click_sheet = new SpriteSheet("/textures/mis/mouse_click_sheet.png", 3, 2);
     
     public SpriteSheet(String path, int size) {
         this.path = path;

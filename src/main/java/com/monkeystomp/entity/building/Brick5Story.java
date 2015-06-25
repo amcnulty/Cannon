@@ -18,6 +18,7 @@ public class Brick5Story extends Building {
         this.y = y;
         hitPointsMax = 2500;
         hitPoints = hitPointsMax;
+        points = 2000;
         sprite = Sprite.brick_5story_building;
         leftEdge = x - (sprite.getWidth() / 2);
         rightEdge = x + (sprite.getWidth()) / 2;
@@ -33,7 +34,8 @@ public class Brick5Story extends Building {
     
     @Override
     public void damageBuilding(int damage) {
-            hitPoints -= damage;
+        hitPoints -= damage;
+        if (hitPoints <= 0) level.increaseScore(points);
     }
     
     @Override

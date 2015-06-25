@@ -47,7 +47,7 @@ public class GrassLevel extends Level {
             System.err.println("Level could not load background image!");
         }
         try {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(Level.class.getResource("/audio/songs/Schubert_Military_March.wav"));
+            AudioInputStream ais = AudioSystem.getAudioInputStream(Level.class.getResource("/audio/songs/sousa-semperfidelis.wav"));
             backgroundMusic = AudioSystem.getClip();
             backgroundMusic.open(ais);
         }
@@ -109,8 +109,8 @@ public class GrassLevel extends Level {
                     enemies.get(enemies.size() - 1).setDestination(190 + random.nextInt(50), 182 + random.nextInt(23));
                     enemies.get(enemies.size() - 1).setDestination(380 + random.nextInt(30), 182 + random.nextInt(23));
                 }
-                enemies.get(enemies.size() - 1).setDestination(100, 192);
-                enemies.get(enemies.size() - 1).attackAtPoint(100, 192);
+                enemies.get(enemies.size() - 1).setDestination(105, 192);
+                enemies.get(enemies.size() - 1).attackAtPoint(105, 192);
                 enemies.get(enemies.size() - 1).init(this);
             }
         }
@@ -121,8 +121,8 @@ public class GrassLevel extends Level {
                     enemies.get(enemies.size() - 1).setDestination(190 + random.nextInt(50), 182 + random.nextInt(23));
                     enemies.get(enemies.size() - 1).setDestination(380 + random.nextInt(30), 182 + random.nextInt(23));
                 }
-                enemies.get(enemies.size() - 1).setDestination(100, 192);
-                enemies.get(enemies.size() - 1).attackAtPoint(100, 192);
+                enemies.get(enemies.size() - 1).setDestination(105, 192);
+                enemies.get(enemies.size() - 1).attackAtPoint(105, 192);
                 enemies.get(enemies.size() - 1).init(this);
             }
         }
@@ -215,7 +215,7 @@ public class GrassLevel extends Level {
         platform.damagePlatform(damage);
     }
     
-    private int anim = 0;
+    //private int anim = 0;
     @Override
     public void update() {
         if (anim > 10000) anim = 0;
@@ -226,11 +226,16 @@ public class GrassLevel extends Level {
             setMobWaveTimer();
             createWave();
         }
-        if (feildIsRightClicked()) {
+        if (feildIsRightClicked() && cannon.readyToFire()) {
             renderClicks = true;
-            cannon.requestFireCannon();
+            groundClickX = mouseX;
+            groundClickY = mouseY;
+            cannon.FireCannon();
         }
-        else renderClicks = false;
+        if (renderClicks) {
+            setMouseClickSprite();
+            clicksAnim++;
+        }
         for (int i = 0; i < backgroundBuildings.size(); i++) {
             if (backgroundBuildings.get(i).isRemoved()) backgroundBuildings.remove(i);
             else backgroundBuildings.get(i).update();
@@ -256,7 +261,7 @@ public class GrassLevel extends Level {
     @Override
     public void render(Screen screen) {
         screen.renderSprite(0, 50, levelBackgroundSprite);
-        if (renderClicks) screen.renderSprite(mouseX - (Sprite.basic_ground_click.getWidth() / 2), mouseY - (Sprite.basic_ground_click.getHeight() / 2), Sprite.basic_ground_click);
+        if (renderClicks) screen.renderSprite(groundClickX - (mouseClickSprite.getWidth() / 2), groundClickY - (mouseClickSprite.getHeight() / 2), mouseClickSprite);
         for (Building build: backgroundBuildings) {
             build.render(screen);
         }

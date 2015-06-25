@@ -35,6 +35,9 @@ public class Sprite {
     public static final Sprite policeman_up_walking_2 = new Sprite(16, 2, 2, SpriteSheet.policeman_sprite_sheet);
     public static final Sprite policeman_left_walking_2 = new Sprite(16, 0, 3, SpriteSheet.policeman_sprite_sheet);
     
+    public static final Sprite policeman_left_attacking_1 = new Sprite(16, 2, 4, SpriteSheet.policeman_sprite_sheet);
+    public static final Sprite policeman_left_attacking_2 = new Sprite(16, 1, 4, SpriteSheet.policeman_sprite_sheet);
+    
     // Cannonball sprites
     public static Sprite basic_cannonball = new Sprite("/textures/projectiles/basic_cannonball.png");
     public static Sprite windup_cannonball = new Sprite("/textures/projectiles/windup_cannonball.png");
@@ -46,7 +49,18 @@ public class Sprite {
     public static Sprite basic_cannon_high = new Sprite("/textures/cannons/basic_cannon_high.png");
     public static Sprite basic_cannon_low = new Sprite("/textures/cannons/basic_cannon_low.png");
     
+    // Platform sprites
+    public static final Sprite woodPlatform = new Sprite("/textures/platforms/wood_platform.png");
+    
+    // Mouse click sprites
     public static Sprite basic_ground_click = new Sprite(16, 16, 0xff0000);
+    public static final Sprite ground_click1 = new Sprite(32, 0, 0, SpriteSheet.mouse_click_sheet);
+    public static final Sprite ground_click2 = new Sprite(32, 1, 0, SpriteSheet.mouse_click_sheet);
+    public static final Sprite ground_click3 = new Sprite(32, 2, 0, SpriteSheet.mouse_click_sheet);
+    public static final Sprite ground_click4 = new Sprite(32, 0, 1, SpriteSheet.mouse_click_sheet);
+    public static final Sprite ground_click5 = new Sprite(32, 1, 1, SpriteSheet.mouse_click_sheet);
+    public static final Sprite ground_click6 = new Sprite(32, 2, 1, SpriteSheet.mouse_click_sheet);
+    
     public static Sprite reload_bar = new Sprite(100, 10, 0xababab);
     public static Sprite projectile_selection = new Sprite("/textures/mis/projectile_selection.png");
     public static Sprite muzzle_flash = new Sprite("/textures/mis/muzzle_flash.png");

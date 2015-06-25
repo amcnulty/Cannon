@@ -30,7 +30,7 @@ public abstract class Platform extends Entity {
     @Override
     public void render(Screen screen) {
         screen.renderSprite(x, y, sprite);
-        screen.renderSprite(300, 27, Sprite.reload_bar);
+        screen.renderSprite(225, 27, Sprite.reload_bar);
         screen.renderCannonHealth((int)(100 * ((double)hitPoints/(double)hitPointsMax)));
     }
 }

@@ -89,7 +89,7 @@ class PurpleLevel extends Level {
         setMousePossition();
         if (feildIsRightClicked()) {
             renderClicks = true;
-            cannon.requestFireCannon();
+            cannon.FireCannon();
         }
         else renderClicks = false;
         for (int i = 0; i < projectiles.size(); i++) {

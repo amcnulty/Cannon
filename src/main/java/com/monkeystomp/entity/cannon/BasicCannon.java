@@ -22,7 +22,7 @@ public class BasicCannon extends Cannon {
     
     public BasicCannon() {
         x = 30;
-        y = 120;
+        y = 135;
         barrelX = x + 32;
         barrelY = y;
         angle = 45.0;
@@ -34,34 +34,32 @@ public class BasicCannon extends Cannon {
     }
     
     @Override
-    public void requestFireCannon() {
-        if (readyToFire) {
-            level.addProjectile(barrelX, barrelY);
-            lastTime = System.nanoTime();
-            readyToFire = false;
-            showMuzzleFlash = true;
-            muzzleFlashTimer = System.nanoTime();
-            Thread audioClipThread = new Thread("Audio Clip") {
-                public void run() {
-                    try {
-                        AudioInputStream ais = AudioSystem.getAudioInputStream(Cannon.class.getResource("/audio/sfx/tank_firing.wav"));
-                        firingSound = AudioSystem.getClip();
-                        firingSound.open(ais);
-                        ais.close();
-                        firingSound.start();
-                        firingSound.addLineListener((LineEvent e) -> {
-                            if (e.getType() == LineEvent.Type.STOP) {
-                                e.getLine().close();
-                            }
-                        });
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
+    public void FireCannon() {
+        level.addProjectile(barrelX, barrelY);
+        lastTime = System.nanoTime();
+        readyToFire = false;
+        showMuzzleFlash = true;
+        muzzleFlashTimer = System.nanoTime();
+        Thread audioClipThread = new Thread("Audio Clip") {
+            public void run() {
+                try {
+                    AudioInputStream ais = AudioSystem.getAudioInputStream(Cannon.class.getResource("/audio/sfx/tank_firing.wav"));
+                    firingSound = AudioSystem.getClip();
+                    firingSound.open(ais);
+                    ais.close();
+                    firingSound.start();
+                    firingSound.addLineListener((LineEvent e) -> {
+                        if (e.getType() == LineEvent.Type.STOP) {
+                            e.getLine().close();
+                        }
+                    });
                 }
-            };
-            audioClipThread.start();
-        }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        audioClipThread.start();
     }
     
     public int getAccuracy() {

@@ -28,6 +28,7 @@ public class Mob extends Entity {
     private int attackSpeed;
     private int showingRedTimer;
     private Sprite redSprite;
+    private int points;
     
     // Corrdinates when the mob should start attacking.
     private int attackX, attackY;
@@ -48,6 +49,7 @@ public class Mob extends Entity {
                 hitPoints = 25;
                 attackDamage = 5;
                 attackSpeed = 30;
+                points = 15;
                 break;
         }
     }
@@ -125,6 +127,8 @@ public class Mob extends Entity {
                     else if (walking && anim % 20 >= 10) {
                         sprite = Sprite.policeman_left_walking_2;
                     }
+                    else if (attacking && anim % 20 < 10) sprite = Sprite.policeman_left_attacking_1;
+                    else if (attacking && anim % 20 >= 10) sprite = Sprite.policeman_left_attacking_2;
                     break;
             }
             break;
@@ -132,7 +136,11 @@ public class Mob extends Entity {
     }
     
     public void update() {
-        if (hitPoints <= 0) remove();
+        if (hitPoints <= 0) {
+            level.increaseScore(points);
+            System.out.println("Increasing Score");
+            remove();
+        }
         if (anim >= 60) anim = 0;
         else anim++;
         
@@ -167,6 +175,7 @@ public class Mob extends Entity {
         if (x == attackX && y == attackY && anim % attackSpeed == 0) {
             attacking = true;
             level.damagePlatform(attackDamage);
+            level.decreaseScore(2);
         }
     }
     

@@ -14,11 +14,11 @@ import com.monkeystomp.graphics.Sprite;
 class BasicPlatform extends Platform {
 
     public BasicPlatform() {
-        x = 50;
-        y = 180;
+        x = 0;
+        y = 132;
         hitPointsMax = 3000;
         hitPoints = hitPointsMax;
-        sprite = Sprite.master_cannonball;
+        sprite = Sprite.woodPlatform;
     }
     
     public void damagePlatform(int damage) {

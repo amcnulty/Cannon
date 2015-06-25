@@ -85,7 +85,6 @@ public class Display extends Canvas implements Runnable {
         changeLevel(Level.grassLevel);
         initGame(Cannon.basicCannon, Platform.basicPlatform);
         gameState = GAME_RUNNING;
-        
         addKeyListener(key);
         addMouseListener(mouse);
         addMouseMotionListener(mouse);

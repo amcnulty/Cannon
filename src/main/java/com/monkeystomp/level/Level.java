@@ -25,6 +25,8 @@ public abstract class Level {
     protected int mouseX, mouseY;
     // The target of the cannonball adjusted for the cannon's accuracy
     protected int targetX, targetY;
+    // Location on the ground where the mouse was clicked.
+    protected int groundClickX, groundClickY;
     // Tells the render method to show buton click animation
     protected boolean renderClicks = false;
     // Allows to request the cannon to fire when player right clicks on battlefield.
@@ -35,9 +37,13 @@ public abstract class Level {
     protected int nextWaveTimer;
     protected int width, height;
     protected int difficulty;
+    protected int score = 0;
     protected Random random;
     protected BufferedImage levelBackgroundImage;
     protected Sprite levelBackgroundSprite;
+    protected Sprite mouseClickSprite;
+    protected int anim = 0;
+    protected int clicksAnim = 0;
     
     protected Clip backgroundMusic;
     
@@ -83,6 +89,18 @@ public abstract class Level {
         backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
     }
     
+    public void increaseScore(int points) {
+        score += points;
+    }
+    
+    public void decreaseScore(int points) {
+        score -= points;
+    }
+    
+    public  int getScore() {
+        return score;
+    }
+    
     public boolean buildingHere(int x, int y) {
         return false;
     }
@@ -103,6 +121,20 @@ public abstract class Level {
     }
     
     public void damagePlatform(int damage) {
+    }
+    
+    protected void setMouseClickSprite() {
+        if (clicksAnim == 30) {
+            renderClicks = false;
+            clicksAnim = 0;
+            return;
+        }
+        if (clicksAnim % 30 < 5) mouseClickSprite = Sprite.ground_click1;
+        else if (clicksAnim % 30 >= 5 && clicksAnim % 30 < 10) mouseClickSprite = Sprite.ground_click2;
+        else if (clicksAnim % 30 >= 10 && clicksAnim % 30 < 15) mouseClickSprite = Sprite.ground_click3;
+        else if (clicksAnim % 30 >= 15 && clicksAnim % 30 < 20) mouseClickSprite = Sprite.ground_click4;
+        else if (clicksAnim % 30 >= 20 && clicksAnim % 30 < 25) mouseClickSprite = Sprite.ground_click5;
+        else if (clicksAnim % 30 >= 25) mouseClickSprite = Sprite.ground_click6;
     }
     
     public void update() {
