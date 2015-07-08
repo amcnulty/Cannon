@@ -51,9 +51,9 @@ public class ToolBar {
     private boolean showInfoBox4 = false;
     
     // Number of shade lines on the border.
-    private static final int BORDER_SHADES = 5;
+    public static final int BORDER_SHADES = 5;
     // Color of the background.
-    private static final int BACKGROUNDCOLOR = 0x9393FF;
+    public static final int BACKGROUNDCOLOR = 0x9393FF;
     // Used to print text to the screen.
     private Font font;
     // Handle for the cannon

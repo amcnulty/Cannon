@@ -75,6 +75,9 @@ public class Sprite {
     // Temporary pause window sprite
     public static final Sprite pause_window = new Sprite(100, 100, 0xff0000);
     
+    // Start Screen Background sprite
+    public static final Sprite start_screen_background = new Sprite("/backgrounds/cannon.jpg");
+    
     /**
      * Use this constructor to get a square sprite from a sprite sheet.
      * @param size - Edge length of the square sprite.
@@ -144,6 +147,10 @@ public class Sprite {
         return height;
     }
     
+    /**
+     * 
+     * @return The array of pixel data for this sprite.
+     */
     public int[] getPixels() {
         return pixels;
     }

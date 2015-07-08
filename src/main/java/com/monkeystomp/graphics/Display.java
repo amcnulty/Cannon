@@ -9,7 +9,7 @@ import com.monkeystomp.entity.cannon.Cannon;
 import com.monkeystomp.controls.Keyboard;
 import com.monkeystomp.controls.Mouse;
 import com.monkeystomp.controls.ToolBar;
-import com.monkeystomp.controls.PauseWindow;
+import com.monkeystomp.menus.PauseWindow;
 import com.monkeystomp.entity.platform.Platform;
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -19,6 +19,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import com.monkeystomp.level.Level;
+import com.monkeystomp.menus.StartScreen;
 import java.awt.Cursor;
 import java.awt.Point;
 import java.io.IOException;
@@ -67,6 +68,8 @@ public class Display extends Canvas implements Runnable {
     private ToolBar toolbar;
     // The Level class is used to control the level this class is updating and rendering.
     public Level level;
+    // The first screen you see when you start the game.
+    public StartScreen startScreen;
     // Used to update and render a specific cannon
     public Cannon cannon;
     // Used to update and render a specific platform
@@ -99,12 +102,13 @@ public class Display extends Canvas implements Runnable {
         screen = new Screen(SCREEN_WIDTH, SCREEN_HEIGHT, TOOLBAR_BOTTOM_EDGE);
         key = new Keyboard();
         mouse = new Mouse();
+        startScreen = new StartScreen();
         level = Level.grassLevel;
         pauseWindow = new PauseWindow();
         toolbar = new ToolBar(SCREEN_WIDTH, SCREEN_HEIGHT, SCALE, TOOLBAR_BOTTOM_EDGE, this, key);
-        changeLevel(Level.grassLevel);
-        initGame(Cannon.basicCannon, Platform.basicPlatform);
-        gameState = GAME_RUNNING;
+        //changeLevel(Level.grassLevel);
+        //initGame(Cannon.basicCannon, Platform.basicPlatform);
+        gameState = START_SCREEN;
         addKeyListener(key);
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
@@ -258,6 +262,14 @@ public class Display extends Canvas implements Runnable {
     private void update() {
         key.update();
         switch (gameState) {
+            case START_SCREEN:
+                startScreen.update();
+                if (startScreen.startGame) {
+                    changeLevel(Level.grassLevel);
+                    initGame(Cannon.basicCannon, Platform.basicPlatform);
+                    gameState = GAME_RUNNING;
+                }
+                break;
             case GAME_RUNNING:
                 if (key.escape && !key.checked) {
                     key.checked = true;
@@ -285,6 +297,9 @@ public class Display extends Canvas implements Runnable {
             return;
         }
         switch (gameState) {
+            case START_SCREEN:
+                startScreen.render(screen);
+                break;
             case GAME_RUNNING:
                 level.render(screen);
                 toolbar.render(screen);

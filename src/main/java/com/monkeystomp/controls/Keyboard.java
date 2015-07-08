@@ -27,7 +27,6 @@ public class Keyboard implements KeyListener{
         r = keys[KeyEvent.VK_R];
         f = keys[KeyEvent.VK_F];
         v = keys[KeyEvent.VK_V];
-        if (keys[KeyEvent.VK_ESCAPE]) System.out.println("ESCAPE");
     }
 
     @Override
