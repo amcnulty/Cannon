@@ -16,6 +16,7 @@ public class Keyboard implements KeyListener{
     
     private boolean[] keys = new boolean[200];
     public boolean escape, key1, key2, key3, key4, r, f, v;
+    public boolean checked;
     
     public void update() {
         escape = keys[KeyEvent.VK_ESCAPE];
@@ -26,6 +27,7 @@ public class Keyboard implements KeyListener{
         r = keys[KeyEvent.VK_R];
         f = keys[KeyEvent.VK_F];
         v = keys[KeyEvent.VK_V];
+        if (keys[KeyEvent.VK_ESCAPE]) System.out.println("ESCAPE");
     }
 
     @Override
@@ -41,6 +43,7 @@ public class Keyboard implements KeyListener{
     @Override
     public void keyReleased(KeyEvent e) {
         keys[e.getKeyCode()] = false;
+        checked = false;
     }
     
 }
