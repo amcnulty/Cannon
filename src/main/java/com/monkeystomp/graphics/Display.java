@@ -9,6 +9,7 @@ import com.monkeystomp.entity.cannon.Cannon;
 import com.monkeystomp.controls.Keyboard;
 import com.monkeystomp.controls.Mouse;
 import com.monkeystomp.controls.ToolBar;
+import com.monkeystomp.controls.PauseWindow;
 import com.monkeystomp.entity.platform.Platform;
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -68,6 +69,7 @@ public class Display extends Canvas implements Runnable {
     // Allows access to mouse and keyboard input.
     private Keyboard key;
     private Mouse mouse;
+    private PauseWindow pauseWindow;
     
     public Display () {
         size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -81,6 +83,7 @@ public class Display extends Canvas implements Runnable {
         level = Level.grassLevel;
         key = new Keyboard();
         mouse = new Mouse();
+        pauseWindow = new PauseWindow();
         toolbar = new ToolBar(SCREEN_WIDTH, SCREEN_HEIGHT, SCALE, TOOLBAR_BOTTOM_EDGE, this, key);
         changeLevel(Level.grassLevel);
         initGame(Cannon.basicCannon, Platform.basicPlatform);
@@ -156,15 +159,24 @@ public class Display extends Canvas implements Runnable {
     }
     
     private void update() {
+        key.update();
         switch (gameState) {
             case GAME_RUNNING:
+                if (key.escape && !key.checked) {
+                    key.checked = true;
+                    gameState = GAME_PAUSED;
+                }
                 platform.update();
                 level.update();
                 toolbar.update();
                 cannon.update();
                 break;
             case GAME_PAUSED:
-                
+                pauseWindow.update();
+                if (key.escape && !key.checked) {
+                    key.checked = true;
+                    gameState = GAME_RUNNING;
+                }
                 break;
         }
     }
@@ -175,10 +187,17 @@ public class Display extends Canvas implements Runnable {
             createBufferStrategy(3);
             return;
         }
-        level.render(screen);
-        toolbar.render(screen);
-        platform.render(screen);
-        cannon.render(screen);
+        switch (gameState) {
+            case GAME_RUNNING:
+                level.render(screen);
+                toolbar.render(screen);
+                platform.render(screen);
+                cannon.render(screen);
+                break;
+            case GAME_PAUSED:
+                pauseWindow.render(screen);
+                break;
+        }
         System.arraycopy(screen.pixels, 0, pixels, 0, pixels.length);
         Graphics g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);

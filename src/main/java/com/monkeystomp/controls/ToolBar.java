@@ -156,7 +156,6 @@ public class ToolBar {
     
     //int anim = 0;
     public void update() {
-        key.update();
         if (key.key1) selected_shell = Projectile.BASICCANNONBALL;
         else if (key.key2) selected_shell = Projectile.TURTLESHELLCANNONBALL;
         else if (key.key3) selected_shell = Projectile.MASTERCANNONBALL;

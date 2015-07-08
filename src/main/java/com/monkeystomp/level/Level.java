@@ -38,6 +38,7 @@ public abstract class Level {
     protected int width, height;
     protected int difficulty;
     protected int score = 0;
+    protected int multiplier = 1;
     protected Random random;
     protected BufferedImage levelBackgroundImage;
     protected Sprite levelBackgroundSprite;
@@ -89,8 +90,20 @@ public abstract class Level {
         backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
     }
     
+    public void addMultiplier(int multiplier) {
+        this.multiplier += multiplier;
+    }
+    
+    public void subtractMultiplier(int multiplier) {
+        this.multiplier -= multiplier;
+    }
+    
+    public int getMultiplier() {
+        return multiplier;
+    }
+    
     public void increaseScore(int points) {
-        score += points;
+        score += points * multiplier;
     }
     
     public void decreaseScore(int points) {

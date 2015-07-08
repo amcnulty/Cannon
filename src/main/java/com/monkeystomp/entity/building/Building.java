@@ -17,6 +17,9 @@ public abstract class Building extends Entity {
     
     protected Sprite sprite;
     protected int points;
+    protected int multiplier;
+    protected boolean multiplierActive = false;
+    protected int multiplierTimer;
     protected int leftEdge, rightEdge, topEdge, bottomEdge;
     protected int hitPoints, hitPointsMax;
     

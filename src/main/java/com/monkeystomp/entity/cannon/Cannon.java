@@ -90,6 +90,7 @@ public abstract class Cannon extends Entity {
         screen.renderReloadBar((int)(100 * reloadBarPercent));
         font.renderSuperSmallCharacters2(125, 15, fireStatusMessage, screen);
         font.renderSuperSmallCharacters2(339, 30, Integer.toString(level.getScore()), screen);
+        if (level.getMultiplier() > 1) font.renderSuperSmallCharacters2(388, 16, "X" + Integer.toString(level.getMultiplier()), screen);
     }
     
 }
