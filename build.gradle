@@ -14,6 +14,7 @@ mainClassName = 'com.monkeystomp.Main'
 jar {
 	manifest {
 		attributes 'Main-Class' : 'com.monkeystomp.Main'
+		attributes 'SplashScreen-Image' : 'splashScreen/splash_screen.png'
 	}
 }
 

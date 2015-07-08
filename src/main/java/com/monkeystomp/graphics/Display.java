@@ -18,6 +18,10 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import com.monkeystomp.level.Level;
+import java.awt.Cursor;
+import java.awt.Point;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 /**
@@ -52,6 +56,7 @@ public class Display extends Canvas implements Runnable {
     // Pixels to be loaded to the BufferedImage.
     private int[] pixels;
     // Gamestate Variables
+    private static final int START_SCREEN = 0;
     private static final int GAME_RUNNING = 1;
     private static final int GAME_PAUSED = 2;
     // The variable that is checked by the render and update methods.
@@ -68,6 +73,16 @@ public class Display extends Canvas implements Runnable {
     // Allows access to mouse and keyboard input.
     private Keyboard key;
     private Mouse mouse;
+    // Cursor variables
+    private Cursor beerBottle;
+    private static final String BEER_BOTTLE_POINTER_NAME = "Beer Bottle Pointer";
+    private static final int BEER_BOTTLE_POINTER = 0;
+    private Cursor torch;
+    private static final String TORCH_POINTER_NAME = "Torch Pointer";
+    private static final int TORCH_POINTER = 1;
+    private Cursor flameSword;
+    private static final String FLAME_SWORD_POINTER_NAME = "Flame Sword Pointer";
+    private static final int FLAME_SWORD_POINTER = 2;
     
     public Display () {
         size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -75,12 +90,13 @@ public class Display extends Canvas implements Runnable {
         size.height = SCREEN_HEIGHT * SCALE;
         setPreferredSize(size);
         frame = new JFrame();
+        loadCursors();
         image = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
         screen = new Screen(SCREEN_WIDTH, SCREEN_HEIGHT, TOOLBAR_BOTTOM_EDGE);
-        level = Level.grassLevel;
         key = new Keyboard();
         mouse = new Mouse();
+        level = Level.grassLevel;
         toolbar = new ToolBar(SCREEN_WIDTH, SCREEN_HEIGHT, SCALE, TOOLBAR_BOTTOM_EDGE, this, key);
         changeLevel(Level.grassLevel);
         initGame(Cannon.basicCannon, Platform.basicPlatform);
@@ -88,6 +104,86 @@ public class Display extends Canvas implements Runnable {
         addKeyListener(key);
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
+    }
+    
+    /**
+     * This method is called by the constructor to load the custom cursors on startup.
+     * Currently this sets the default cursor to the torch.
+     */
+    private final void loadCursors() {
+        // The raw image.
+        BufferedImage cursorImage = null;
+        // The image after alpha checking.
+        BufferedImage cursor = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        // Load beer bottle cursor.
+        try {
+            cursorImage = ImageIO.read(Display.class.getResource("/textures/pointers/beer_bottle_pointer.png"));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load beer bottle mouse pointer image");
+        }
+        if (cursorImage != null) {
+            for (int y = 0; y < cursor.getWidth(); y++) {
+                for (int x = 0; x < cursor.getHeight(); x++) {
+                    if (cursorImage.getRGB(x, y) != 0xffff00ff) {
+                        cursor.setRGB(x, y, cursorImage.getRGB(x, y));
+                    }
+                }
+            }
+        }
+        beerBottle = Toolkit.getDefaultToolkit().createCustomCursor(cursor, new Point(0, 0), BEER_BOTTLE_POINTER_NAME);
+        // Load torch cursor
+        try {
+            cursorImage = ImageIO.read(Display.class.getResource("/textures/pointers/torch_pointer.png"));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load torch mouse pointer image");
+        }
+        if (cursorImage != null) {
+            for (int y = 0; y < cursor.getWidth(); y++) {
+                for (int x = 0; x < cursor.getHeight(); x++) {
+                    if (cursorImage.getRGB(x, y) != 0xffff00ff) {
+                        cursor.setRGB(x, y, cursorImage.getRGB(x, y));
+                    }
+                }
+            }
+        }
+        torch = Toolkit.getDefaultToolkit().createCustomCursor(cursor, new Point(0, 0), TORCH_POINTER_NAME);
+        // Load flame sword cursor
+        try {
+            cursorImage = ImageIO.read(Display.class.getResource("/textures/pointers/flame_sword_pointer.png"));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load flame sword mouse pointer image");
+        }
+        if (cursorImage != null) {
+            for (int y = 0; y < cursor.getWidth(); y++) {
+                for (int x = 0; x < cursor.getHeight(); x++) {
+                    if (cursorImage.getRGB(x, y) != 0xffff00ff) {
+                        cursor.setRGB(x, y, cursorImage.getRGB(x, y));
+                    }
+                }
+            }
+        }
+        flameSword = Toolkit.getDefaultToolkit().createCustomCursor(cursor, new Point(0, 0), FLAME_SWORD_POINTER_NAME);
+        frame.getContentPane().setCursor(torch);
+    }
+    
+    public void setCursor(int type) {
+        switch (type) {
+            case BEER_BOTTLE_POINTER:
+                frame.getContentPane().setCursor(beerBottle);
+                break;
+            case TORCH_POINTER:
+                frame.getContentPane().setCursor(torch);
+                break;
+            case FLAME_SWORD_POINTER:
+                frame.getContentPane().setCursor(flameSword);
+                break;
+        }
     }
     
     public void initGame(Cannon cannon, Platform platform) {

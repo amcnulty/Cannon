@@ -138,7 +138,6 @@ public class Mob extends Entity {
     public void update() {
         if (hitPoints <= 0) {
             level.increaseScore(points);
-            System.out.println("Increasing Score");
             remove();
         }
         if (anim >= 60) anim = 0;

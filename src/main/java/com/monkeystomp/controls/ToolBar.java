@@ -173,7 +173,7 @@ public class ToolBar {
         screen.renderSprite(0, 0, background);
         // Shells section
         font.renderSuperSmallCharacters2(40, 10, "SHELLS", screen);
-        font.renderSuperSmallCharacters2(239, 16, "CANNON HEALTH", screen);
+        font.renderSuperSmallCharacters2(239, 16, "CANNON HEALTHHH", screen);
         font.renderSuperSmallCharacters2(354, 16, "SCORE", screen);
         screen.renderSprite(10, 22, Sprite.basic_cannonball);
         screen.renderSprite(35, 22, Sprite.turtle_cannonball);
