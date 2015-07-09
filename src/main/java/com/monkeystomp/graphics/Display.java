@@ -282,6 +282,11 @@ public class Display extends Canvas implements Runnable {
                 break;
             case GAME_PAUSED:
                 pauseWindow.update();
+                if (pauseWindow.goToMainMenu) {
+                    gameState = START_SCREEN;
+                    level.stopMusic();
+                }
+                if (pauseWindow.resumeGame) gameState = GAME_RUNNING;
                 if (key.escape && !key.checked) {
                     key.checked = true;
                     gameState = GAME_RUNNING;

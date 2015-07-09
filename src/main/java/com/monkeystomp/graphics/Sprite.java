@@ -72,9 +72,6 @@ public class Sprite {
     public static Sprite brick_5Stroy_building_high_damage = new Sprite("/textures/buildings/brick_5story_building_high_damage.png");
     public static Sprite brick_5story_building_destroyed = new Sprite("/textures/buildings/brick_5story_building_destroyed.png");
     
-    // Temporary pause window sprite
-    public static final Sprite pause_window = new Sprite(100, 100, 0xff0000);
-    
     // Start Screen Background sprite
     public static final Sprite start_screen_background = new Sprite("/backgrounds/cannon.jpg");
     

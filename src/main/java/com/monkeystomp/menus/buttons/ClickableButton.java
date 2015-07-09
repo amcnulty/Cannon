@@ -11,6 +11,11 @@ import com.monkeystomp.graphics.Font;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
 import com.monkeystomp.menus.Menu;
+import com.monkeystomp.menus.commands.Command;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
 
 /**
  *
@@ -27,6 +32,8 @@ public class ClickableButton {
     private int leftEdge, rightEdge, topEdge, bottomEdge;
     // The text displayed on the button.
     private final String text;
+    // The clip object that plays the button click sound.
+    private Clip clickSound;
     // Used to control the color of the text on the button.
     private boolean uptodate = false;
     private boolean lastTime = false;
@@ -37,7 +44,7 @@ public class ClickableButton {
     // Use this to set the option to have a border on the button.
     public boolean showBorder = true;
     // The command this button is assigned.
-    private final int command;
+    private final Command command;
     // The sprite for this button.
     private Sprite buttonSprite;
     // The sprite for the text.
@@ -59,9 +66,13 @@ public class ClickableButton {
     public static final int OPTIONS = 11;
     public static final int Quit = 12;
     
+//    public enum Command {
+//        START_GAME, OPTIONS, QUIT
+//    }
+    
     private Menu parent;
     
-    public ClickableButton(int x, int y, String text, int textStyle, int command, Menu parent) {
+    public ClickableButton(int x, int y, String text, int textStyle, Command command, Menu parent) {
         this.x = x;
         this.y = y;
         this.parent = parent;
@@ -99,16 +110,27 @@ public class ClickableButton {
         buttonSprite = new Sprite(0, 0, pixels, width, height);
     }
     
-    public void setWidth(int width) {
-        
-    }
-    
-    public void setHeight(int height) {
-        
-    }
-    
     private void onClick() {
-        // play click sound here
+        Thread audioClipThread = new Thread ("Button Click") {
+            public void run() {
+                try {
+                    AudioInputStream ais = AudioSystem.getAudioInputStream(ClickableButton.class.getResource("/audio/sfx/button_click.wav"));
+                    clickSound = AudioSystem.getClip();
+                    clickSound.open(ais);
+                    ais.close();
+                    clickSound.start();
+                    clickSound.addLineListener((LineEvent e) -> {
+                        if (e.getType() == LineEvent.Type.STOP) {
+                            e.getLine().close();
+                        }
+                    });
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };
+        audioClipThread.start();
         parent.doCommand(command);
     }
     

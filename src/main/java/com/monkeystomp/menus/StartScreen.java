@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import com.monkeystomp.menus.commands.Command;
 
 /**
  *
@@ -25,9 +26,10 @@ public class StartScreen extends Menu{
     private final Sprite background;
     public boolean startGame = false;
     public boolean options = false;
+    private boolean musicPlaying = false;
     private Clip backgroundMusic;
     
-    private ArrayList<ClickableButton> buttons = new ArrayList<>();
+    //private ArrayList<ClickableButton> buttons = new ArrayList<>();
     
     public StartScreen() {
         //background = new Sprite(0, 0, createBackgroundSprite(), Display.SCREEN_WIDTH, Display.SCREEN_HEIGHT);
@@ -58,39 +60,46 @@ public class StartScreen extends Menu{
     }
     
     private final void addButtons() {
-        buttons.add(new ClickableButton(Display.SCREEN_WIDTH / 2, 100, "Start Game", ClickableButton.SMALL_TEXT, ClickableButton.START_GAME, this));
-        buttons.add(new ClickableButton(Display.SCREEN_WIDTH / 2, 130, "Options", ClickableButton.SMALL_TEXT, ClickableButton.OPTIONS, this));
-        buttons.add(new ClickableButton(Display.SCREEN_WIDTH / 2, 160, "Quit", ClickableButton.SMALL_TEXT, ClickableButton.Quit, this));
+        buttons.add(new ClickableButton(Display.SCREEN_WIDTH / 2, 100, "Start Game", ClickableButton.SMALL_TEXT, Command.START_GAME, this));
+        buttons.add(new ClickableButton(Display.SCREEN_WIDTH / 2, 130, "Options", ClickableButton.SMALL_TEXT, Command.OPTIONS, this));
+        buttons.add(new ClickableButton(Display.SCREEN_WIDTH / 2, 160, "Quit", ClickableButton.SMALL_TEXT, Command.QUIT, this));
         for (ClickableButton but: buttons) {
             but.showBorder = false;
         }
     }
     
     public void stopMusic() {
+        musicPlaying = false;
         backgroundMusic.stop();
     }
     
     public void playMusic() {
+        musicPlaying = true;
         backgroundMusic.setFramePosition(0);
         backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
     }
     
     @Override
-    public void doCommand(int command) {
+    public void doCommand(Command command) {
         switch (command) {
-            case ClickableButton.START_GAME:
+            case START_GAME:
                 stopMusic();
                 startGame = true;
                 break;
-            case ClickableButton.OPTIONS:
+            case OPTIONS:
                 options = true;
                 break;
-            case ClickableButton.Quit:
+            case QUIT:
                 System.exit(0);
         }
     }
     
     public void update() {
+        if (startGame || options) {
+            startGame = false;
+            options = false;
+        }
+        if (!musicPlaying) playMusic();
         for (ClickableButton but: buttons) {
             but.update();
         }
