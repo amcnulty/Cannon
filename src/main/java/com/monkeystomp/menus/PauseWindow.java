@@ -6,11 +6,13 @@
 package com.monkeystomp.menus;
 
 import com.monkeystomp.controls.ToolBar;
+import com.monkeystomp.graphics.ColorUtil;
 import com.monkeystomp.graphics.Display;
 import com.monkeystomp.graphics.Screen;
 import com.monkeystomp.graphics.Sprite;
 import com.monkeystomp.menus.buttons.*;
 import com.monkeystomp.menus.commands.*;
+import java.awt.Color;
 
 /**
  *
@@ -19,11 +21,15 @@ import com.monkeystomp.menus.commands.*;
 public class PauseWindow extends Menu{
     
     private final Sprite backgroundSprite;
+    private Sprite transparent = new Sprite(100, 100, 0x00ff00);
     private final int x, y;
+    private Screen screen;
     public boolean goToMainMenu = false;
     public boolean resumeGame = false;
+    private boolean readyToRender = false;
     
-    public PauseWindow() {
+    public PauseWindow(Screen screen) {
+        this.screen = screen;
         this.x = Display.SCREEN_WIDTH / 2;
         this.y = Display.SCREEN_HEIGHT / 2;
         backgroundSprite = new Sprite(0, 0, createBackgroundSprite(), 100, 100);
@@ -67,7 +73,22 @@ public class PauseWindow extends Menu{
     }
     
     public void update() {
+        if (!readyToRender) {
+            // blend the colors of background and menubox
+            for (int y = 0; y < 100; y++) {
+                for (int x = 0; x < 100; x++) {
+                    Color background = new Color(screen.pixels[(x + 260) + (y + 110) * screen.width]);
+                    Color menu = Color.blue;
+                    Color blend = ColorUtil.blend(background, menu, .3);
+                    transparent.pixels[x + y * 100] = blend.getRGB();
+                }
+            }
+            System.out.println("I'm blending colors");
+            readyToRender = true;
+        }
         if (goToMainMenu || resumeGame) {
+            System.out.println("Exiting");
+            readyToRender = false;
             goToMainMenu = false;
             resumeGame = false;
         }
@@ -77,10 +98,12 @@ public class PauseWindow extends Menu{
     }
     
     public void render(Screen screen) {
+        this.screen = screen;
         screen.renderSprite(x - backgroundSprite.getWidth() / 2, y - backgroundSprite.getHeight() / 2, backgroundSprite);
         for (ClickableButton but: buttons) {
             but.render(screen);
         }
+        if(readyToRender) screen.renderSprite(260, 110, transparent);
     }
     
 }

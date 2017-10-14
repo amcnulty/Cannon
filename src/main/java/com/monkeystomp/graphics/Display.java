@@ -104,7 +104,7 @@ public class Display extends Canvas implements Runnable {
         mouse = new Mouse();
         startScreen = new StartScreen();
         level = Level.grassLevel;
-        pauseWindow = new PauseWindow();
+        pauseWindow = new PauseWindow(screen);
         toolbar = new ToolBar(SCREEN_WIDTH, SCREEN_HEIGHT, SCALE, TOOLBAR_BOTTOM_EDGE, this, key);
         //changeLevel(Level.grassLevel);
         //initGame(Cannon.basicCannon, Platform.basicPlatform);

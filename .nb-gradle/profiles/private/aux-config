@@ -5,29 +5,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
       <group>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/graphics/Screen.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/entity/cannon/Cannon.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/level/Level.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/graphics/SpriteSheet.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/graphics/Display.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/controls/ToolBar.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/entity/platform/BasicPlatform.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/entity/cannon/BasicCannon.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/controls/PauseWindow.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/entity/platform/Platform.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/entity/building/Brick5Story.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/graphics/Sprite.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/entity/mob/Mob.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/level/GrassLevel.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/entity/building/Building.java</file>
+        <file>file:/C:/Users/Aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/graphics/Display.java</file>
+        <file>file:/C:/Users/Aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/Main.java</file>
+        <file>file:/C:/Users/Aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/graphics/Screen.java</file>
       </group>
     </open-files>
     <editor-bookmarks lastBookmarkId="0" xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
       <group>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/menus/StartScreen.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/menus/buttons/ClickableButton.java</file>
-        <file>file:/C:/Users/aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/graphics/Display.java</file>
+        <file>file:/C:/Users/Aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/graphics/Display.java</file>
+        <file>file:/C:/Users/Aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/menus/Menu.java</file>
+        <file>file:/C:/Users/Aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/Main.java</file>
+        <file>file:/C:/Users/Aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/menus/commands/Command.java</file>
+        <file>file:/C:/Users/Aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/level/GrassLevel.java</file>
+        <file>file:/C:/Users/Aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/menus/PauseWindow.java</file>
+        <file>file:/C:/Users/Aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/graphics/Screen.java</file>
+        <file>file:/C:/Users/Aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/controls/ToolBar.java</file>
+        <file>file:/C:/Users/Aaron/Documents/GitHub/Cannon/src/main/java/com/monkeystomp/level/Level.java</file>
       </group>
     </open-files>
   </auxiliary>

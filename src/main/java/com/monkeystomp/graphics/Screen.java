@@ -14,7 +14,7 @@ import java.util.Random;
 public class Screen {
     
     private Random random;
-    private int width, height;
+    public int width, height;
     private final int TOP_OF_VIEW;
     public int[] pixels;
     
